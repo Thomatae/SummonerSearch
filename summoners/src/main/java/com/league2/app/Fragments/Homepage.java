@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
@@ -26,6 +27,7 @@ public class Homepage extends Fragment{
     private String API_KEY = "ddb565ce-33ad-435f-ac6c-82882a99c6f6";
     private SummonerInfoVo mSummonerInfoVo;
     private String mQuery;
+    private ProgressBar mApiProgress;
 
     public interface CheckApiListener{
         void checkApiListener(final String name);
@@ -50,10 +52,10 @@ public class Homepage extends Fragment{
 
         final View view = layoutInflater.inflate(R.layout.homepage_layout, null);
         final EditText apiEntry = (EditText) view.findViewById(R.id.summoner_name);
-        final ProgressBar apiProgress = (ProgressBar) view.findViewById(R.id.check_api_progress);
+        mApiProgress = (ProgressBar) view.findViewById(R.id.check_api_progress);
         final Button checkApi = (Button) view.findViewById(R.id.api_enter);
 
-        apiProgress.setVisibility(View.INVISIBLE);
+        mApiProgress.setVisibility(View.INVISIBLE);
 
         checkApi.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -62,13 +64,14 @@ public class Homepage extends Fragment{
                 try {
                     mQuery = apiEntry.getText().toString();
                 } catch (NullPointerException e) {
-
                 }
 
                 if (mQuery.equals("")) {
-                    //put conditions where they didnt enter a string
+
                 } else {
+                    mApiProgress.setVisibility(View.VISIBLE);
                     new RetrieveSummonerId().execute();
+                    mApiProgress.setVisibility(View.INVISIBLE);
 
                 }
 
@@ -80,16 +83,11 @@ public class Homepage extends Fragment{
 
     }
 
-    private void checkSummonerName(String name) {
-        mSummonerInfoVo = mLeagueApi.getSummonerStats(mQuery, API_KEY);
-        Log.d("summon", mSummonerInfoVo + "");
-        ((CheckApiListener) getActivity()).checkApiListener(name);
-    }
-
     private class RetrieveSummonerId extends AsyncTask<Void, Void, SummonerInfoVo> {
 
         protected SummonerInfoVo doInBackground(Void... here) {
-                return mLeagueApi.getSummonerStats(mQuery, API_KEY);
+
+            return mLeagueApi.getSummonerStats(mQuery, API_KEY);
         }
 
         protected void onPostExecute(SummonerInfoVo infoVo) {
