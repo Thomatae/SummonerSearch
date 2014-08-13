@@ -55,7 +55,7 @@ public class Homepage extends Fragment{
         final Button checkApi = (Button) view.findViewById(R.id.api_enter);
 
 
-        mApiProgress.setVisibility(View.INVISIBLE);
+        mApiProgress.setVisibility(View.GONE);
 
         checkApi.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -71,7 +71,6 @@ public class Homepage extends Fragment{
                 } else {
                     mApiProgress.setVisibility(View.VISIBLE);
                     new RetrieveSummonerId().execute();
-                    mApiProgress.setVisibility(View.INVISIBLE);
 
                 }
 
@@ -95,6 +94,8 @@ public class Homepage extends Fragment{
         }
 
         protected void onPostExecute(SummonerInfoVo infoVo) {
+
+            mApiProgress.setVisibility(View.GONE);
             Log.d("checkMe", infoVo.getResults().getSummonerId() + "");
             mCallbacks.setSummonerId(infoVo.getResults().getSummonerId());
 
