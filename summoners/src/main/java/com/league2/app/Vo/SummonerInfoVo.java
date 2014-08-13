@@ -3,6 +3,7 @@ package com.league2.app.Vo;
 import org.codehaus.jackson.annotate.JsonAnySetter;
 
 public class SummonerInfoVo {
+
     public SummonerVo name;
 
 
