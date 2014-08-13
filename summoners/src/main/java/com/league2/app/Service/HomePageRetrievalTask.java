@@ -4,9 +4,6 @@ import android.os.AsyncTask;
 
 import com.league2.app.Vo.SummonerInfoVo;
 
-/**
- * Created by tthomas on 3/10/14.
- */
 public class HomePageRetrievalTask extends AsyncTask<Void,Void, SummonerInfoVo> {
 
     @Override

@@ -5,16 +5,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.league2.app.R;
 
 public class GeneralInfoFragment extends Fragment {
-    private static final String SECTION_NUMBER = "section_number";
-    private int mSectionNumber;
-    public static GeneralInfoFragment newInstance(int sectionNumber) {
+    private static final String SUMMONER_ID = "summonerId";
+    private long mSummonerId;
+
+    private TextView mIdView;
+
+    public static GeneralInfoFragment newInstance(long sectionNumber) {
         GeneralInfoFragment fragment = new GeneralInfoFragment();
         Bundle args = new Bundle();
-        args.putInt(SECTION_NUMBER, sectionNumber);
+        args.putLong(SUMMONER_ID, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -25,15 +29,19 @@ public class GeneralInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mSectionNumber = getArguments().getInt(SECTION_NUMBER);
+            mSummonerId = getArguments().getLong(SUMMONER_ID);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_general_info, container, false);
+        View view = inflater.inflate(R.layout.fragment_general_info, container, false);
+
+        mIdView = (TextView) view.findViewById(R.id.summonerId);
+        mIdView.setText(Long.toString(mSummonerId));
+
+        return view;
     }
 
     @Override

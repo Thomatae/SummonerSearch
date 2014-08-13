@@ -3,7 +3,6 @@ package com.league2.app.Fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
@@ -28,9 +26,10 @@ public class Homepage extends Fragment{
     private SummonerInfoVo mSummonerInfoVo;
     private String mQuery;
     private ProgressBar mApiProgress;
+    private Callbacks mCallbacks;
 
-    public interface CheckApiListener{
-        void checkApiListener(final String name);
+    public interface Callbacks{
+        void setSummonerId(final long summonerId);
     }
 
     @Override
@@ -54,6 +53,7 @@ public class Homepage extends Fragment{
         final EditText apiEntry = (EditText) view.findViewById(R.id.summoner_name);
         mApiProgress = (ProgressBar) view.findViewById(R.id.check_api_progress);
         final Button checkApi = (Button) view.findViewById(R.id.api_enter);
+
 
         mApiProgress.setVisibility(View.INVISIBLE);
 
@@ -83,6 +83,10 @@ public class Homepage extends Fragment{
 
     }
 
+    public void setCallbacks(Callbacks callbacks) {
+        mCallbacks = callbacks;
+    }
+
     private class RetrieveSummonerId extends AsyncTask<Void, Void, SummonerInfoVo> {
 
         protected SummonerInfoVo doInBackground(Void... here) {
@@ -92,9 +96,9 @@ public class Homepage extends Fragment{
 
         protected void onPostExecute(SummonerInfoVo infoVo) {
             Log.d("checkMe", infoVo.getResults().getSummonerId() + "");
+            mCallbacks.setSummonerId(infoVo.getResults().getSummonerId());
+
 
         }
     }
-
-
 }

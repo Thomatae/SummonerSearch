@@ -8,6 +8,6 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 
 public interface LeagueApi {
-    @GET("/v1.3/summoner/by-name/{name}")
+    @GET("/v1.4/summoner/by-name/{name}")
     SummonerInfoVo getSummonerStats(@Path("name") String name, @Query("api_key") String apiKey);
 }

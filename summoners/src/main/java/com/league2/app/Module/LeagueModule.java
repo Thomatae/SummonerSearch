@@ -16,7 +16,7 @@ import retrofit.RestAdapter;
 public class LeagueModule {
     private final DaggerApplication application;
     private final ObjectMapper mapper = new ObjectMapper();
-    private static String LEAGUE_API = "https://prod.api.pvp.net/api/lol/na/";
+    private static String LEAGUE_API = "https://na.api.pvp.net/api/lol/na";
 
     public LeagueModule(DaggerApplication application) {
         this.application = application;

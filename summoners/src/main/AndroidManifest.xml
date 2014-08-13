@@ -13,16 +13,17 @@
         <activity
             android:name="com.league2.app.Activities.MainActivity"
             android:label="@string/app_name" >
-
-        </activity>
-        <activity
-            android:name="com.league2.app.Activities.InfoPagerActivity"
-            android:label="@string/title_activity_info_pager" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity
+            android:name="com.league2.app.Activities.InfoPagerActivity"
+            android:label="@string/title_activity_info_pager" >
+
         </activity>
     </application>
 

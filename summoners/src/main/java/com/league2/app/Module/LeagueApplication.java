@@ -9,7 +9,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import retrofit.RestAdapter;
 
 public class LeagueApplication extends Application {
-    private static String LEAGUE_API = "https://prod.api.pvp.net/api/lol/na";
+    private static String LEAGUE_API = "https://na.api.pvp.net/api/lol/na";
 
     private LeagueApi mLeagueApi;
 

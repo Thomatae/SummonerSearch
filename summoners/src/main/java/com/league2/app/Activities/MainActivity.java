@@ -1,5 +1,6 @@
 package com.league2.app.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +10,9 @@ import com.league2.app.Fragments.Homepage;
 import com.league2.app.R;
 import com.league2.app.Vo.SummonerInfoVo;
 
-public class MainActivity extends ActionBarActivity implements Homepage.CheckApiListener {
+public class MainActivity extends ActionBarActivity implements Homepage.Callbacks {
+
+    public static final String SUMMONER_ID = "summonerId";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,16 @@ public class MainActivity extends ActionBarActivity implements Homepage.CheckApi
 
     private void initializeHomepageFragment() {
         Homepage homepageFragment = new Homepage();
+        homepageFragment.setCallbacks(this);
         homepageFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, homepageFragment).commit();
     }
 
-    public void checkApiListener(String name) {
-
+    @Override
+    public void setSummonerId(long summonerId) {
+        Intent intent = new Intent(this, InfoPagerActivity.class);
+        intent.putExtra(SUMMONER_ID, summonerId);
+        startActivity(intent);
     }
 
 

@@ -23,25 +23,22 @@ import com.league2.app.R;
 
 public class InfoPagerActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    private long mSummonerId;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_pager);
+
+        if (savedInstanceState != null) {
+            getExtras(savedInstanceState);
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            getExtras(bundle);
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -76,6 +73,10 @@ public class InfoPagerActivity extends ActionBarActivity implements ActionBar.Ta
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+    }
+
+    private void getExtras(Bundle savedInstanceState) {
+        mSummonerId = savedInstanceState.getLong(MainActivity.SUMMONER_ID);
     }
 
 
@@ -128,7 +129,7 @@ public class InfoPagerActivity extends ActionBarActivity implements ActionBar.Ta
         public Fragment getItem(int position) {
             switch(position) {
                 case 0:
-                    return GeneralInfoFragment.newInstance(position + 1);
+                    return GeneralInfoFragment.newInstance(mSummonerId);
                 case 1:
                     return PlaceholderFragment.newInstance(position + 2);
                 default:
@@ -188,6 +189,7 @@ public class InfoPagerActivity extends ActionBarActivity implements ActionBar.Ta
             View rootView = inflater.inflate(R.layout.fragment_main2, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+
             return rootView;
         }
     }
