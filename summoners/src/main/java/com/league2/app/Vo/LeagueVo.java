@@ -7,6 +7,12 @@ public class LeagueVo {
 
     public String division;
     public boolean isHotStreak;
+    public MiniSeriesVo miniSeries;
     public int leaguePoints;
     public int wins;
+    public String playerOrTeamName;
+
+    public MiniSeriesVo getSeries() {
+        return miniSeries;
+    }
 }

@@ -2,6 +2,7 @@ package com.league2.app.Module;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import com.league2.app.Fragments.GeneralInfoFragment;
 import com.league2.app.Fragments.Homepage;
 import com.league2.app.Service.LeagueApi;
 
@@ -12,7 +13,7 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
 
-@Module(injects = Homepage.class, library = true)
+@Module(injects = {Homepage.class, GeneralInfoFragment.class}, library = true)
 public class LeagueModule {
     private final DaggerApplication application;
     private final ObjectMapper mapper = new ObjectMapper();

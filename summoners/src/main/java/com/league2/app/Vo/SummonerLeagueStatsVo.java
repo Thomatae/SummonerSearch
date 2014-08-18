@@ -15,4 +15,5 @@ public class SummonerLeagueStatsVo {
     public LeagueVo getResutls() {
         return entries.get(0);
     }
+
 }

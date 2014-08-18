@@ -22,7 +22,6 @@ public class Homepage extends Fragment{
 
     @Inject LeagueApi mLeagueApi;
 
-    private String API_KEY = "ddb565ce-33ad-435f-ac6c-82882a99c6f6";
     private SummonerInfoVo mSummonerInfoVo;
     private String mQuery;
     private ProgressBar mApiProgress;
@@ -90,7 +89,7 @@ public class Homepage extends Fragment{
 
         protected SummonerInfoVo doInBackground(Void... here) {
 
-            return mLeagueApi.getSummonerStats(mQuery, API_KEY);
+            return mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key));
         }
 
         protected void onPostExecute(SummonerInfoVo infoVo) {

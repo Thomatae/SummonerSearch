@@ -6,33 +6,86 @@
     android:background="#b5842f">
 
 
-
-    <LinearLayout
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_margin="20dp"
+        android:background="#98aaad">
 
         <TextView
-            android:id="@+id/summonerId"
-            android:layout_width="365dp"
-            android:layout_height="40dip"
-            android:text="@string/hello_blank_fragment"
-            android:background="#98aaad"
-            android:layout_gravity="center_horizontal" />
-        <TextView
-            android:layout_width="365dp"
-            android:layout_height="45dip"
-            android:text="@string/current_rank"
-            android:paddingRight = "4dip"
-            android:paddingLeft = "4dip"
-            android:autoText="false"
-            android:background="#98aaad"
-            android:layout_gravity="center_horizontal|bottom"
-            android:textStyle="bold"
+            android:id="@+id/summoner_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingTop="5dp"
             android:typeface="serif"
-            android:gravity="center_vertical"
-            android:textSize="20sp" />
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <RelativeLayout
+            android:id="@+id/rank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp">
+
+            <TextView
+                style="@style/AppTheme.GeneralPlacementText"
+                android:text="@string/current_rank"/>
+
+            <TextView
+                style="@style/AppTheme.GeneralInfoText"
+                android:id="@+id/current_rank"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                style="@style/AppTheme.GeneralPlacementText"
+                android:text="@string/league_points"/>
+
+            <TextView
+                style="@style/AppTheme.GeneralInfoText"
+                android:id="@+id/league_points"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/series"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                style="@style/AppTheme.GeneralPlacementText"
+                android:text="@string/series_progress"/>
+
+            <TextView
+                style="@style/AppTheme.GeneralInfoText"
+                android:id="@+id/progress"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/league_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <TextView
+                style="@style/AppTheme.GeneralPlacementText"
+                android:text="@string/series_progress"/>
+
+            <TextView
+                style="@style/AppTheme.GeneralInfoText"
+                android:id="@+id/name_of_league"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
-
 </FrameLayout>
