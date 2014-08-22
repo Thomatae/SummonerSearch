@@ -1,5 +1,6 @@
 package com.league2.app.Service;
 
+import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerInfoVo;
 import com.league2.app.Vo.SummonerLeagueStatsVo;
@@ -15,4 +16,7 @@ public interface LeagueApi {
 
     @GET("/v2.4/league/by-summoner/{id}/entry")
     SummonerIdLeagueVo getSummonerLeagueStats(@Path("id") long id, @Query("api_key") String apiKey);
+
+    @GET("/v1.3/game/by-summoner/{id}/recent")
+    RecentGamesVo getRecentGames(@Path("id") long id, @Query("api_key") String apiKey);
 }

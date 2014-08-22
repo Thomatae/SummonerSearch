@@ -29,10 +29,10 @@ public class GeneralInfoFragment extends Fragment {
 
     @Inject LeagueApi mLeagueApi;
 
-    public static GeneralInfoFragment newInstance(long sectionNumber) {
+    public static GeneralInfoFragment newInstance(long summonerId) {
         GeneralInfoFragment fragment = new GeneralInfoFragment();
         Bundle args = new Bundle();
-        args.putLong(SUMMONER_ID, sectionNumber);
+        args.putLong(SUMMONER_ID, summonerId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +74,10 @@ public class GeneralInfoFragment extends Fragment {
         mCurrentRank.setText(statsVo.tier + " " + statsVo.getResutls().division);
         mNumberOfWins.setText(Integer.toString(statsVo.getResutls().leaguePoints));
 
-        if (statsVo.getResutls().getSeries().progress != null) {
+        if (statsVo.getResutls().getSeries() != null) {
             mSeriesProgress.setText(statsVo.getResutls().getSeries().progress);
+        } else {
+            mSeriesProgress.setText("N/A");
         }
 
         mSummonerName.setText(statsVo.getResutls().playerOrTeamName);
