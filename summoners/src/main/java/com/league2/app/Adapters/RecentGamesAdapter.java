@@ -1,15 +1,18 @@
 package com.league2.app.Adapters;
 
 
+import org.w3c.dom.Text;
 import android.content.Context;
 import android.support.v4.view.ViewCompatKitKat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.league2.app.R;
+import com.league2.app.Vo.GameStatsVo;
 import com.league2.app.Vo.GameVo;
 import com.league2.app.Vo.RecentGamesVo;
 
@@ -29,7 +32,13 @@ public class RecentGamesAdapter extends BaseArrayAdapter<GameVo> {
     }
 
     private static class ViewHolder {
+        TextView championName;
+        TextView killsDeathsAssists;
+        TextView date;
         TextView gameMode;
+        TextView minionKills;
+        TextView goldEarned;
+        ImageView championIcon;
     }
 
     @Override
@@ -41,15 +50,27 @@ public class RecentGamesAdapter extends BaseArrayAdapter<GameVo> {
 
             viewHolder = new ViewHolder();
 
+            viewHolder.championName = (TextView) convertView.findViewById(R.id.champion_name);
+            viewHolder.date = (TextView) convertView.findViewById(R.id.date);
+            viewHolder.killsDeathsAssists = (TextView) convertView.findViewById(R.id.kills_death_assists);
             viewHolder.gameMode = (TextView) convertView.findViewById(R.id.game_mode);
+            viewHolder.minionKills = (TextView) convertView.findViewById(R.id.minionKills);
+            viewHolder.goldEarned = (TextView) convertView.findViewById(R.id.goldEarned);
+            viewHolder.championIcon = (ImageView) convertView.findViewById(R.id.champion_icon);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         GameVo game = mRecentGames.get(position);
+        GameStatsVo stats = game.getStats();
 
         viewHolder.gameMode.setText(game.gameMode);
+        viewHolder.killsDeathsAssists.setText(stats.championsKilled + "/" + stats.numDeaths + "/" + stats.assists);
+        viewHolder.minionKills.setText("CS: " + stats.minionsKilled);
+        viewHolder.goldEarned.setText("Gold Earned: " + stats.goldEarned);
+
 
         return convertView;
 

@@ -15,4 +15,8 @@ public class GameVo {
     public GameStatsVo stats;
     public String subType;
     public int teamId;
+
+    public GameStatsVo getStats() {
+        return stats;
+    }
 }

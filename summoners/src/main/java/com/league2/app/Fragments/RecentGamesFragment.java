@@ -73,7 +73,6 @@ public class RecentGamesFragment extends ListFragment {
         }
 
         protected void onPostExecute(RecentGamesVo recentGamesVo) {
-            Log.d("recentGames", "here: " + recentGamesVo.games);
             initializeListViewAdapter(recentGamesVo);
             this.cancel(true);
         }
