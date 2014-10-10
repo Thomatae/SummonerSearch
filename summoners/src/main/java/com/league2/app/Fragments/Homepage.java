@@ -1,5 +1,8 @@
 package com.league2.app.Fragments;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
+import com.league2.app.Service.SummonerErrorHandler;
 import com.league2.app.Vo.SummonerInfoVo;
 
 import javax.inject.Inject;
@@ -26,6 +31,7 @@ public class Homepage extends Fragment{
     private String mQuery;
     private ProgressBar mApiProgress;
     private Callbacks mCallbacks;
+    private SummonerErrorHandler mSummonerErrorHandler;
 
     public interface Callbacks{
         void setSummonerId(final long summonerId);
@@ -69,7 +75,20 @@ public class Homepage extends Fragment{
 
                 } else {
                     mApiProgress.setVisibility(View.VISIBLE);
-                    new RetrieveSummonerId().execute();
+//                    new RetrieveSummonerId().execute();
+
+                    mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
+                        @Override
+                        public void success(SummonerInfoVo summonerInfoVo, Response response) {
+                            mApiProgress.setVisibility(View.GONE);
+                            mCallbacks.setSummonerId(summonerInfoVo.getResults().getSummonerId());
+                        }
+
+                        @Override
+                        public void failure(RetrofitError retrofitError) {
+                            Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
+                        }
+                    });
 
                 }
 
@@ -85,20 +104,20 @@ public class Homepage extends Fragment{
         mCallbacks = callbacks;
     }
 
-    private class RetrieveSummonerId extends AsyncTask<Void, Void, SummonerInfoVo> {
-
-        protected SummonerInfoVo doInBackground(Void... here) {
-
-            return mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key));
-        }
-
-        protected void onPostExecute(SummonerInfoVo infoVo) {
-
-            mApiProgress.setVisibility(View.GONE);
-            Log.d("checkMe", infoVo.getResults().getSummonerId() + "");
-            mCallbacks.setSummonerId(infoVo.getResults().getSummonerId());
-
-
-        }
-    }
+//    private class RetrieveSummonerId extends AsyncTask<Void, Void, SummonerInfoVo> {
+//
+//        protected SummonerInfoVo doInBackground(Void... here) {
+//
+//            return mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key));
+//        }
+//
+//        protected void onPostExecute(SummonerInfoVo infoVo) {
+//
+//            mApiProgress.setVisibility(View.GONE);
+//            Log.d("checkMe", infoVo.getResults().getSummonerId() + "");
+//            mCallbacks.setSummonerId(infoVo.getResults().getSummonerId());
+//
+//
+//        }
+//    }
 }

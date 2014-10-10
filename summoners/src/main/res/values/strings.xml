@@ -14,5 +14,6 @@
     <string name="current_rank">Current Rank:</string>
     <string name="league_points">League Points:</string>
     <string name="series_progress">Series Progress:</string>
+    <string name="not_available">N/A</string>
 
 </resources>

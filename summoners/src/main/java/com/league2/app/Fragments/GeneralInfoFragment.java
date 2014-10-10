@@ -1,14 +1,20 @@
 package com.league2.app.Fragments;
 
 import org.w3c.dom.Text;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.league2.app.Adapters.LeaguesAdapter;
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
@@ -16,16 +22,15 @@ import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerLeagueStatsVo;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class GeneralInfoFragment extends Fragment {
     private static final String SUMMONER_ID = "summonerId";
     private long mSummonerId;
 
-    private TextView mCurrentRank;
-    private TextView mNumberOfWins;
-    private TextView mSeriesProgress;
+    private ListView mListView;
+    private LeaguesAdapter mLeagueAdapter;
     private TextView mSummonerName;
-    private TextView mLeagueName;
 
     @Inject LeagueApi mLeagueApi;
 
@@ -55,51 +60,38 @@ public class GeneralInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_general_info, container, false);
 
-        mCurrentRank = (TextView) view.findViewById(R.id.current_rank);
-        mNumberOfWins = (TextView) view.findViewById(R.id.league_points);
-        mSeriesProgress = (TextView) view.findViewById(R.id.progress);
-        mSummonerName = (TextView) view.findViewById(R.id.summoner_name);
-        mLeagueName = (TextView) view.findViewById(R.id.name_of_league);
+        mListView = (ListView) view.findViewById(R.id.general_list);
 
-        initialize();
+        mSummonerName = (TextView) view.findViewById(R.id.summoner_name);
+
+        getLeagueInformation();
 
         return view;
     }
 
-    private void initialize() {
-        new RetreiveLeagueInfo().execute();
+    private void getLeagueInformation() {
+        mLeagueApi.getSummonerLeagueStats(mSummonerId, getString(R.string.api_key), new Callback<SummonerIdLeagueVo>() {
+            @Override
+            public void success(SummonerIdLeagueVo summonerIdLeagueVo, Response response) {
+                initializeListViewAdapter(summonerIdLeagueVo.getResults());
+                mSummonerName.setText(summonerIdLeagueVo.getResults().get(0).getResutls().playerOrTeamName);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getActivity(), "Problems with retrofit", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
-    private void setValues(SummonerLeagueStatsVo statsVo) {
-        mCurrentRank.setText(statsVo.tier + " " + statsVo.getResutls().division);
-        mNumberOfWins.setText(Integer.toString(statsVo.getResutls().leaguePoints));
-
-        if (statsVo.getResutls().getSeries() != null) {
-            mSeriesProgress.setText(statsVo.getResutls().getSeries().progress);
-        } else {
-            mSeriesProgress.setText("N/A");
-        }
-
-        mSummonerName.setText(statsVo.getResutls().playerOrTeamName);
-        mLeagueName.setText(statsVo.name);
+    private void initializeListViewAdapter(List<SummonerLeagueStatsVo> leagues) {
+        mLeagueAdapter = new LeaguesAdapter(getActivity(), leagues);
+        mListView.setAdapter(mLeagueAdapter);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    private class RetreiveLeagueInfo extends AsyncTask<Void, Void, SummonerIdLeagueVo> {
-
-        protected SummonerIdLeagueVo doInBackground(Void... here) {
-
-            return mLeagueApi.getSummonerLeagueStats(mSummonerId, getString(R.string.api_key));
-        }
-
-        protected void onPostExecute(SummonerIdLeagueVo infoVo) {
-            setValues(infoVo.getResults());
-            this.cancel(true);
-        }
     }
 
 }

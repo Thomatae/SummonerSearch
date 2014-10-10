@@ -7,8 +7,8 @@ import java.util.List;
 public class SummonerIdLeagueVo {
     public List<SummonerLeagueStatsVo> id;
 
-    public SummonerLeagueStatsVo getResults() {
-        return id.get(0);
+    public List<SummonerLeagueStatsVo> getResults() {
+        return id;
     }
 
     @JsonAnySetter
