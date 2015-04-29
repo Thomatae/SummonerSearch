@@ -27,17 +27,23 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/champion_name"
+                android:typeface="serif"
+                android:textStyle="bold"
                 tools:text="Alistar"/>
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_mode"
+                android:typeface="serif"
+                android:textStyle="bold"
                 android:layout_below="@+id/champion_name"
                 tools:text="ARAMS"/>
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/goldEarned"
+                android:typeface="serif"
+                android:textStyle="bold"
                 tools:text="13.4k"/>
 
         </LinearLayout>
@@ -53,16 +59,22 @@
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/kills_death_assists"
+            android:typeface="serif"
+            android:textStyle="bold"
             tools:text="3/11/20"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/minionKills"
+            android:typeface="serif"
+            android:textStyle="bold"
             tools:text="CS: 138"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/date"
+            android:typeface="serif"
+            android:textStyle="bold"
             tools:text="Aug 18, 3:45pm"/>
 
     </LinearLayout>

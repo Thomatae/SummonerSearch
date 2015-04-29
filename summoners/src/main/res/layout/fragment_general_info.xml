@@ -7,8 +7,7 @@
 
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#98aaad">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/summoner_name"
@@ -21,9 +20,15 @@
             android:layout_gravity="center_horizontal"/>
 
         <ListView
-            android:id="@+id/general_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@id/android:list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+        <TextView android:id="@id/android:empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff3c3f41"
+            android:text="No Ranked Information for this Summoner"/>
 
     </LinearLayout>
 

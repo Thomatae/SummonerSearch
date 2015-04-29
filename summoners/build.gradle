@@ -16,17 +16,17 @@ android {
 
 android {
     compileSdkVersion 20
-    buildToolsVersion '19.1.0'
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         minSdkVersion 11
-        targetSdkVersion 20
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
         release {
-            runProguard true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }

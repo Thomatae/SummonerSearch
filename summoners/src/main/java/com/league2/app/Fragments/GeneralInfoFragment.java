@@ -22,6 +22,7 @@ import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerLeagueStatsVo;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GeneralInfoFragment extends Fragment {
@@ -60,7 +61,7 @@ public class GeneralInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_general_info, container, false);
 
-        mListView = (ListView) view.findViewById(R.id.general_list);
+        mListView = (ListView) view.findViewById(android.R.id.list);
 
         mSummonerName = (TextView) view.findViewById(R.id.summoner_name);
 
@@ -79,7 +80,10 @@ public class GeneralInfoFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                Toast.makeText(getActivity(), "Problems with retrofit", Toast.LENGTH_SHORT);
+                List<SummonerLeagueStatsVo> emptyList = new ArrayList<SummonerLeagueStatsVo>();
+                mSummonerName.setVisibility(View.GONE);
+                initializeListViewAdapter(emptyList);
+                Toast.makeText(getActivity(), "Problems with retrofit", Toast.LENGTH_SHORT).show();
             }
         });
     }
