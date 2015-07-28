@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.league2.app.adapter.RecentGamesAdapter;
-import com.league2.app.Module.DaggerApplication;
+import com.league2.app.module.DaggerApplication;
 import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Vo.RecentGamesVo;

@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.league2.app.Module.DaggerApplication;
+import com.league2.app.module.DaggerApplication;
 import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.SummonerErrorHandler;
