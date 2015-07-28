@@ -1,20 +1,15 @@
-package com.league2.app.Adapters;
+package com.league2.app.adapter;
 
 
-import org.w3c.dom.Text;
 import android.content.Context;
-import android.support.v4.view.ViewCompatKitKat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.league2.app.R;
-import com.league2.app.Vo.GameStatsVo;
-import com.league2.app.Vo.GameVo;
-import com.league2.app.Vo.RecentGamesVo;
+import com.league2.app.vo.GameStatsVo;
+import com.league2.app.vo.GameVo;
 
 import java.util.List;
 

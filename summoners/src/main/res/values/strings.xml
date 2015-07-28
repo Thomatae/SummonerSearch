@@ -16,4 +16,8 @@
     <string name="series_progress">Series Progress:</string>
     <string name="not_available">N/A</string>
 
+    <!--Menu Strings-->
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+
 </resources>

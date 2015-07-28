@@ -1,4 +1,4 @@
-package com.league2.app.Adapters;
+package com.league2.app.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
