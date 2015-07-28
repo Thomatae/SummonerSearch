@@ -2,9 +2,9 @@ package com.league2.app.Module;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import com.league2.app.Fragments.GeneralInfoFragment;
-import com.league2.app.Fragments.Homepage;
-import com.league2.app.Fragments.RecentGamesFragment;
+import com.league2.app.fragment.GeneralInfoFragment;
+import com.league2.app.fragment.Homepage;
+import com.league2.app.fragment.RecentGamesFragment;
 import com.league2.app.Service.LeagueApi;
 
 import org.codehaus.jackson.map.ObjectMapper;

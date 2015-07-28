@@ -3,11 +3,9 @@ package com.league2.app.Service;
 import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerInfoVo;
-import com.league2.app.Vo.SummonerLeagueStatsVo;
 
 import retrofit.Callback;
 import retrofit.http.GET;
-import retrofit.http.PATCH;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
