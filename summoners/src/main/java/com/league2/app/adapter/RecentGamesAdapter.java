@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.league2.app.R;
-import com.league2.app.Vo.GameStatsVo;
-import com.league2.app.Vo.GameVo;
+import com.league2.app.vo.GameStatsVo;
+import com.league2.app.vo.GameVo;
 
 import java.util.List;
 

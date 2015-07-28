@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.league2.app.R;
-import com.league2.app.Vo.LeagueVo;
-import com.league2.app.Vo.SummonerLeagueStatsVo;
+import com.league2.app.vo.LeagueVo;
+import com.league2.app.vo.SummonerLeagueStatsVo;
 
 import java.util.List;
 
