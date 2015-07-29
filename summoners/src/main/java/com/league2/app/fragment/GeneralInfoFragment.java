@@ -13,12 +13,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.league2.app.Vo.SummonerLeagueStatsVo;
 import com.league2.app.adapter.LeaguesAdapter;
-import com.league2.app.module.DaggerApplication;
+import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
-import com.league2.app.service.LeagueApi;
-import com.league2.app.vo.SummonerIdLeagueVo;
-import com.league2.app.vo.SummonerLeagueStatsVo;
+import com.league2.app.Service.LeagueApi;
+import com.league2.app.Vo.SummonerIdLeagueVo;
 
 import javax.inject.Inject;
 import java.util.List;

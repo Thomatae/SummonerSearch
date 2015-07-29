@@ -14,11 +14,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.league2.app.module.DaggerApplication;
+import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
-import com.league2.app.service.LeagueApi;
-import com.league2.app.service.SummonerErrorHandler;
-import com.league2.app.vo.SummonerInfoVo;
+import com.league2.app.Service.LeagueApi;
+import com.league2.app.Service.SummonerErrorHandler;
+import com.league2.app.Vo.SummonerInfoVo;
 
 import javax.inject.Inject;
 
