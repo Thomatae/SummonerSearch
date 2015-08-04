@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/League2.iml" filepath="$PROJECT_DIR$/League2.iml" />
       <module fileurl="file://$PROJECT_DIR$/SummonerSearch.iml" filepath="$PROJECT_DIR$/SummonerSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/summoners/summoners.iml" filepath="$PROJECT_DIR$/summoners/summoners.iml" />
     </modules>
   </component>
 </project>
-
