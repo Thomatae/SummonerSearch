@@ -1,36 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="#ff344ca0">
+    android:background="@android:color/white">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <com.league2.app.view.CustomCardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id = "@+id/add_user_card"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enter"
-        android:id="@+id/api_enter"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:background="@android:color/white"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check_api_progress"
-        style="?android:progressBarStyleLarge"
-        android:layout_below="@+id/api_enter"
-        android:layout_centerHorizontal="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
 
+            <TextView
+                android:id="@+id/get_started"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/get_started"
+                android:paddingLeft="1dp"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/white"
-        android:ems="10"
-        android:id="@+id/summoner_name"
-        android:layout_above="@+id/api_enter"
-        android:layout_centerHorizontal="true"
-        android:hint="Summoner Name..." />
+            <TextView
+                android:id="@+id/get_started_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/get_started"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:paddingLeft="1dp"
+                android:text="@string/get_started_intro"
+                android:singleLine="false"
+                android:textSize="16sp"/>
 
-</RelativeLayout>
+            <android.widget.EditText
+                android:id="@+id/edit_user_name"
+                android:layout_below="@id/get_started_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:hint="@string/user_name_hint"/>
+
+            <Button
+                android:id="@+id/update"
+                android:text="@string/update"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@android:color/holo_blue_dark"
+                android:layout_below="@+id/edit_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"/>
+
+        </RelativeLayout>
+
+    </com.league2.app.view.CustomCardView>
+
+</LinearLayout>

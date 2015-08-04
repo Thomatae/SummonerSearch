@@ -1,7 +1,9 @@
 package com.league2.app.activity;
 
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,18 +16,28 @@ import android.view.View;
 import com.league2.app.fragment.Homepage;
 import com.league2.app.R;
 
-public class MainActivity extends AppCompatActivity implements Homepage.Callbacks {
+public class MainActivity extends AppCompatActivity {
 
     public static final String SUMMONER_ID = "summonerId";
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
+    private SharedPreferences mSharedPreferences;
+
+    private String mUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //check if user name exists
+            mSharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+            if (mSharedPreferences.contains(getString(R.string.user_name))) {
+               mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
+            }
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -53,9 +65,9 @@ public class MainActivity extends AppCompatActivity implements Homepage.Callback
         mDrawerToggle.syncState();
 
 
-//        if (savedInstanceState == null) {
-//            initializeHomepageFragment();
-//        }
+        if (savedInstanceState == null) {
+            initializeHomepageFragment();
+        }
     }
 
 
@@ -75,18 +87,6 @@ public class MainActivity extends AppCompatActivity implements Homepage.Callback
     }
 
     private void initializeHomepageFragment() {
-        Homepage homepageFragment = new Homepage();
-        homepageFragment.setCallbacks(this);
-        homepageFragment.setArguments(getIntent().getExtras());
-        getSupportFragmentManager().beginTransaction().add(R.id.drawer_layout, homepageFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new Homepage()).commit();
     }
-
-    @Override
-    public void setSummonerId(long summonerId) {
-        Intent intent = new Intent(this, InfoPagerActivity.class);
-        intent.putExtra(SUMMONER_ID, summonerId);
-        startActivity(intent);
-    }
-
-
 }

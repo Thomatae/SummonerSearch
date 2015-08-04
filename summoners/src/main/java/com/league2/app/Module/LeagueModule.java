@@ -17,7 +17,7 @@ import retrofit.RestAdapter;
 @Module(injects = {Homepage.class,
                    GeneralInfoFragment.class,
                    RecentGamesFragment.class},
-        library = true)
+        library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -46,6 +46,7 @@ public class LeagueModule {
 
 
     @Provides
+    @Singleton
     public LeagueApi provideLeagueApi(RestAdapter restAdapter) {
         return restAdapter.create(LeagueApi.class);
     }
