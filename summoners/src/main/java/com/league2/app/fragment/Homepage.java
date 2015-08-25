@@ -76,18 +76,7 @@ public class Homepage extends Fragment{
             mGetStartedCard.setVisibility(View.VISIBLE);
         } else if (!mUserName.equals(getString(R.string.default_user_name)) && mUserId == NO_USER_ID) {
             //TODO add loading view and actually grab ID
-
-            mLeagueApi.getSummonerStats(mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
-                @Override
-                public void success(SummonerInfoVo summonerInfoVo, Response response) {
-                    //TODO disable loading view
-                }
-
-                @Override
-                public void failure(RetrofitError retrofitError) {
-                    Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
-                }
-            });
+            getSummonerId();
         }
 
         return view;
@@ -116,10 +105,39 @@ public class Homepage extends Fragment{
         });
     }
 
+    private void getSummonerId() {
+        mLeagueApi.getSummonerStats(mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
+            @Override
+            public void success(SummonerInfoVo summonerInfoVo, Response response) {
+                if (summonerInfoVo.getResults().getSummonerId() != 0) {
+                    updateUserId(summonerInfoVo.getResults().getSummonerId());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
+            }
+        });
+    }
+
+    private void updateUserId(long userId) {
+        mUserId = userId;
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(getString(R.string.user_id), userId);
+        editor.apply();
+        //TODO fire off bus event to notify drawer
+    }
+
     private void updateUsername(String userName) {
+        mUserName = userName;
         SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(getString(R.string.user_name), userName);
         editor.apply();
+
+        getSummonerId();
+        //TODO fire off bus event to notify drawer
     }
 }
