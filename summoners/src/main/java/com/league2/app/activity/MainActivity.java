@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,10 @@ public class MainActivity extends AppCompatActivity implements Homepage.Callback
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
+    private RecyclerView mRecyclerView;
+
+    //TODO Actually send information to RecylcerView using
+    //recycler Adapter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
