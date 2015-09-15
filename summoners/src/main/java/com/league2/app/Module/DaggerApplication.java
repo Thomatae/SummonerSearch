@@ -8,7 +8,7 @@ import java.util.List;
 import dagger.ObjectGraph;
 
 public class DaggerApplication extends Application{
-    private ObjectGraph graph;
+    private static ObjectGraph graph;
 
     @Override
     public void onCreate() {
@@ -21,7 +21,7 @@ public class DaggerApplication extends Application{
                 new LeagueModule(this)
         );
     }
-    public void inject(Object object) {
+    public static void inject(Object object) {
         graph.inject(object);
     }
 }

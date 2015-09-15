@@ -4,18 +4,24 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
+import com.league2.app.Service.HomePageRetrievalTask;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.SummonerErrorHandler;
 import com.league2.app.Vo.SummonerInfoVo;
@@ -24,27 +30,31 @@ import javax.inject.Inject;
 
 public class Homepage extends Fragment{
 
+    private static final String ARG_USER_NAME = "user_name";
+    private static final int NO_USER_ID = -1;
+
     @Inject LeagueApi mLeagueApi;
 
     private SummonerInfoVo mSummonerInfoVo;
     private String mQuery;
     private ProgressBar mApiProgress;
-    private Callbacks mCallbacks;
     private SummonerErrorHandler mSummonerErrorHandler;
+    private CardView mGetStartedCard;
+    private EditText mSummonerName;
+    private Button mUpdate;
 
-    public interface Callbacks{
-        void setSummonerId(final long summonerId);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((DaggerApplication) getActivity().getApplication()).inject(this);
-    }
+    private String mUserName;
+    private long mUserId = NO_USER_ID;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DaggerApplication.inject(this);
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        mUserName = preferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
+        mUserId = preferences.getInt(getString(R.string.user_id), NO_USER_ID);
     }
 
     @Override
@@ -53,70 +63,81 @@ public class Homepage extends Fragment{
             return null;
         }
 
-        final View view = layoutInflater.inflate(R.layout.homepage_layout, null);
-        final EditText apiEntry = (EditText) view.findViewById(R.id.summoner_name);
-        mApiProgress = (ProgressBar) view.findViewById(R.id.check_api_progress);
-        final Button checkApi = (Button) view.findViewById(R.id.api_enter);
+        View view = layoutInflater.inflate(R.layout.homepage_layout, null);
+        mGetStartedCard = (CardView) view.findViewById(R.id.add_user_card);
+        mSummonerName = (EditText) view.findViewById(R.id.edit_user_name);
+        mUpdate = (Button) view.findViewById(R.id.update);
+
+        setUpdateName();
 
 
-        mApiProgress.setVisibility(View.GONE);
+        if (mUserName.equals(getString(R.string.default_user_name)) && mUserId == NO_USER_ID) {
+            //TODO add home user view here
+            mGetStartedCard.setVisibility(View.VISIBLE);
+        } else if (!mUserName.equals(getString(R.string.default_user_name)) && mUserId == NO_USER_ID) {
+            //TODO add loading view and actually grab ID
+            getSummonerId();
+        }
 
-        checkApi.setOnClickListener( new View.OnClickListener() {
+        return view;
+    }
+
+    private void setUpdateName() {
+        mSummonerName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                checkApi.setVisibility(View.VISIBLE);
-                try {
-                    mQuery = apiEntry.getText().toString();
-                } catch (NullPointerException e) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getAction() == KeyEvent.KEYCODE_ENTER && !v.getText().equals("")) {
+                    updateUsername(v.getText().toString());
                 }
 
-                if (mQuery.equals("")) {
-
-                } else {
-                    mApiProgress.setVisibility(View.VISIBLE);
-//                    new RetrieveSummonerId().execute();
-
-                    mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
-                        @Override
-                        public void success(SummonerInfoVo summonerInfoVo, Response response) {
-                            mApiProgress.setVisibility(View.GONE);
-                            mCallbacks.setSummonerId(summonerInfoVo.getResults().getSummonerId());
-                        }
-
-                        @Override
-                        public void failure(RetrofitError retrofitError) {
-                            Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
-                        }
-                    });
-
-                }
-
-
+                return false;
             }
         });
 
-        return view;
-
+        mUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO add spinner to notify loading
+                if (!mSummonerName.getText().toString().equals("")) {
+                    updateUsername(mSummonerName.getText().toString());
+                }
+            }
+        });
     }
 
-    public void setCallbacks(Callbacks callbacks) {
-        mCallbacks = callbacks;
+    private void getSummonerId() {
+        mLeagueApi.getSummonerStats(mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
+            @Override
+            public void success(SummonerInfoVo summonerInfoVo, Response response) {
+                if (summonerInfoVo.getResults().getSummonerId() != 0) {
+                    updateUserId(summonerInfoVo.getResults().getSummonerId());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
-//    private class RetrieveSummonerId extends AsyncTask<Void, Void, SummonerInfoVo> {
-//
-//        protected SummonerInfoVo doInBackground(Void... here) {
-//
-//            return mLeagueApi.getSummonerStats(mQuery, getString(R.string.api_key));
-//        }
-//
-//        protected void onPostExecute(SummonerInfoVo infoVo) {
-//
-//            mApiProgress.setVisibility(View.GONE);
-//            Log.d("checkMe", infoVo.getResults().getSummonerId() + "");
-//            mCallbacks.setSummonerId(infoVo.getResults().getSummonerId());
-//
-//
-//        }
-//    }
+    private void updateUserId(long userId) {
+        mUserId = userId;
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(getString(R.string.user_id), userId);
+        editor.apply();
+        //TODO fire off bus event to notify drawer
+    }
+
+    private void updateUsername(String userName) {
+        mUserName = userName;
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(getString(R.string.user_name), userName);
+        editor.apply();
+
+        getSummonerId();
+        //TODO fire off bus event to notify drawer
+    }
 }
