@@ -35,9 +35,6 @@ public class Homepage extends Fragment{
 
     @Inject LeagueApi mLeagueApi;
 
-    private SummonerInfoVo mSummonerInfoVo;
-    private String mQuery;
-    private ProgressBar mApiProgress;
     private SummonerErrorHandler mSummonerErrorHandler;
     private CardView mGetStartedCard;
     private EditText mSummonerName;

@@ -27,6 +27,10 @@ public class LeagueModule {
         this.application = application;
     }
 
+    //TODO create another RestAdapter, one for static data
+    //TODo will need another StaticApi
+    //TODO probably need to make a custom class
+
     @Provides @Singleton
     RestAdapter provideRestAdapter() {
         return new RestAdapter.Builder().setEndpoint(LEAGUE_API).setConverter(new JacksonConverter(mapper)).build();
