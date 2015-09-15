@@ -2,6 +2,20 @@
 <items version="2" >
 
     <item
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-9a523c8c4b9ba4a12789754f730547a8b8e1e10f.jar" />
+    </item>
+    <item
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-2e88b59a42f968bc83fb9c8868bb45f7b43b6c87.jar" />
+    </item>
+    <item
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -44,11 +58,11 @@
         <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-b6773515943217cd30555480472f8b2f5aa39243.jar" />
     </item>
     <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-b41c89918880c01e3b218ab1a52c8cfb4370ef15.jar" />
+        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/otto-1.3.8-9b3d787f4042b72d37561ebd1572d76cdd534e3f.jar" />
     </item>
     <item
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.1.0/49f2061c938987c8e56679a731d74fd8448d8742/dagger-1.1.0.jar"

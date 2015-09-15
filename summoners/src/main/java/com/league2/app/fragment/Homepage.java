@@ -25,15 +25,20 @@ import com.league2.app.Service.HomePageRetrievalTask;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.SummonerErrorHandler;
 import com.league2.app.Vo.SummonerInfoVo;
+import com.league2.app.event.ProfileUpdatedEvent;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
 public class Homepage extends Fragment{
 
     private static final String ARG_USER_NAME = "user_name";
-    private static final int NO_USER_ID = -1;
+    private static final long NO_USER_ID = -1;
 
     @Inject LeagueApi mLeagueApi;
+
+    @Inject Bus mBus;
 
     private SummonerErrorHandler mSummonerErrorHandler;
     private CardView mGetStartedCard;
@@ -51,7 +56,7 @@ public class Homepage extends Fragment{
 
         SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         mUserName = preferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
-        mUserId = preferences.getInt(getString(R.string.user_id), NO_USER_ID);
+        mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
     }
 
     @Override
@@ -136,5 +141,20 @@ public class Homepage extends Fragment{
 
         getSummonerId();
         //TODO fire off bus event to notify drawer
+        mBus.post(new ProfileUpdatedEvent());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mBus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mBus.unregister(this);
     }
 }

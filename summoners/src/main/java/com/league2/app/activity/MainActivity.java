@@ -8,14 +8,22 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.league2.app.Module.DaggerApplication;
+import com.league2.app.adapter.DrawerAdapter;
+import com.league2.app.event.ProfileUpdatedEvent;
 import com.league2.app.fragment.Homepage;
 import com.league2.app.R;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,27 +33,46 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private RecyclerView mRecyclerView;
-
-    //TODO Actually send information to RecylcerView using
-    //recycler Adapter
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private SharedPreferences mSharedPreferences;
 
     private String mUserName;
+    private String TITLES[] = {"Home","Summoner Search", "Champions"};
+    private int ICONS[] = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
+
+    @Inject Bus mBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DaggerApplication.inject(this);
+
         //check if user name exists
-            mSharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
-            if (mSharedPreferences.contains(getString(R.string.user_name))) {
-               mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
-            }
+        mSharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        if (mSharedPreferences.contains(getString(R.string.user_name))) {
+            mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
+        } else {
+            mUserName = getString(R.string.default_user_name);
+        }
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
+
+        mRecyclerView.setHasFixedSize(true);
+
+        mAdapter = new DrawerAdapter(this,TITLES , ICONS, mUserName, R.drawable.ic_launcher);
+
+        mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
+
+        mLayoutManager = new LinearLayoutManager(this);                 // Creating a layout Manager
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -75,6 +102,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Subscribe
+    public void onProfileUpdatedEvent(ProfileUpdatedEvent event) {
+        if (mAdapter != null) {
+            mUserName = mSharedPreferences.getString(getString(R.string.user_id), getString(R.string.default_user_name));
+            mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, R.drawable.ic_launcher);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mBus.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mBus.unregister(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

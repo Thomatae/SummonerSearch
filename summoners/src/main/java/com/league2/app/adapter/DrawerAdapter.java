@@ -52,7 +52,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if(viewHolder.Holderid == 1) {
+        if(viewHolder.HolderId == 1) {
             viewHolder.itemTitle.setText(mItemTitles[position - 1]);
             viewHolder.itemIcon.setImageResource(mItemIconIds[position -1]);
         }
@@ -64,11 +64,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mItemTitles.length;
+        return mItemTitles.length + 1;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        int Holderid;
+        int HolderId;
 
         TextView itemTitle;
         ImageView itemIcon;
@@ -82,11 +82,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             if(ViewType == TYPE_ITEM) {
                 itemTitle = (TextView) itemView.findViewById(R.id.item_title);
                 itemIcon = (ImageView) itemView.findViewById(R.id.icon);
-                Holderid = 1;
+                HolderId = 1;
             } else{
                 summonerName = (TextView) itemView.findViewById(R.id.summoner_name);
                 summonerIcon = (ImageView) itemView.findViewById(R.id.summoner_icon);
-                Holderid = 0;
+                HolderId = 0;
             }
         }
 
@@ -95,8 +95,9 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if (isPositionHeader(position))
+        if (isPositionHeader(position)) {
             return TYPE_HEADER;
+        }
 
         return TYPE_ITEM;
     }

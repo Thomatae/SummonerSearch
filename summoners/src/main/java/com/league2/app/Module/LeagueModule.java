@@ -2,10 +2,12 @@ package com.league2.app.Module;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import com.league2.app.activity.MainActivity;
 import com.league2.app.fragment.GeneralInfoFragment;
 import com.league2.app.fragment.Homepage;
 import com.league2.app.fragment.RecentGamesFragment;
 import com.league2.app.Service.LeagueApi;
+import com.squareup.otto.Bus;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -16,7 +18,8 @@ import retrofit.RestAdapter;
 
 @Module(injects = {Homepage.class,
                    GeneralInfoFragment.class,
-                   RecentGamesFragment.class},
+                   RecentGamesFragment.class,
+                   MainActivity.class},
         library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;
@@ -53,5 +56,11 @@ public class LeagueModule {
     @Singleton
     public LeagueApi provideLeagueApi(RestAdapter restAdapter) {
         return restAdapter.create(LeagueApi.class);
+    }
+
+    @Provides
+    @Singleton
+    Bus provideBus() {
+        return new Bus();
     }
 }
