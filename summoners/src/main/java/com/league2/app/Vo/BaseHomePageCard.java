@@ -56,4 +56,49 @@ public class BaseHomePageCard {
     public void setPosition(long position) {
         mPosition = position;
     }
+
+    public static BaseHomePageCard getCardFromType(String cardType) {
+        BaseHomeCardType type = BaseHomeCardType.fromValue(cardType);
+        return type.accept(new ViewTypeVisitor(), null);
+    }
+
+    public enum BaseHomeCardType {
+
+        RANKED("ranked"){
+            @Override
+            <T, V> T accept(Visitor<T, V> visitor, V value) {
+                return visitor.visitRanked(value);
+            }
+        };
+
+        public String value;
+
+        BaseHomeCardType(String value) {
+            this.value = value;
+        }
+
+        static BaseHomeCardType fromValue(String value) {
+            for (BaseHomeCardType type : values()) {
+                if (type.value.equals(value)) {
+                    return type;
+                }
+            }
+
+            throw new IllegalArgumentException(String.format("ViewType does not have a return type for %s. Something is incredibly messed up.", value));
+        }
+
+        abstract <T,V> T accept(Visitor<T,V> visitor, V value);
+
+        public static interface Visitor<T,V> {
+            T visitRanked(V value);
+        }
+    }
+
+    public static class ViewTypeVisitor implements BaseHomePageCard.BaseHomeCardType.Visitor<BaseHomePageCard, Void> {
+
+        @Override
+        public BaseHomePageCard visitRanked(Void value) {
+            return new RankedHomePageCard();
+        }
+    }
 }

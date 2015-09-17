@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.league2.app.Vo.BaseHomePageCard;
+import com.league2.app.Vo.RankedHomePageCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,11 @@ public class JSONUtil {
         return null;
     }
 
+    /**
+     * Takes in a json Object
+     * Iterates through the list of objects
+     * populates list of cards by type
+     * */
     public static List<BaseHomePageCard> toCards(String json) {
         //TODO generate cards based on type?
         List<BaseHomePageCard> homePageCards = new ArrayList<>();
@@ -53,7 +59,8 @@ public class JSONUtil {
 
             for (int i = 0; i < objectList.length(); i++) {
                 JSONObject listItem = objectList.getJSONObject(i);
-                //TODO do a switch through types
+                String type = listItem.getString(BaseHomePageCard.TYPE);
+                homePageCards.add(BaseHomePageCard.getCardFromType(type));
             }
 
             return homePageCards;
