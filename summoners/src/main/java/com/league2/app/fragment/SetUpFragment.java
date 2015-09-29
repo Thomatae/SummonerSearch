@@ -31,7 +31,9 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
-public class Homepage extends Fragment{
+public class SetUpFragment extends Fragment{
+
+    public static final String TITLE = "Set Up";
 
     private static final String ARG_USER_NAME = "user_name";
     private static final long NO_USER_ID = -1;
@@ -84,6 +86,10 @@ public class Homepage extends Fragment{
         return view;
     }
 
+    public static String getTitle() {
+        return TITLE;
+    }
+
     private void setUpdateName() {
         mSummonerName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -113,6 +119,7 @@ public class Homepage extends Fragment{
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
                 if (summonerInfoVo.getResults().getSummonerId() != 0) {
                     updateUserId(summonerInfoVo.getResults().getSummonerId());
+                    mBus.post(new ProfileUpdatedEvent());
                 }
             }
 
@@ -141,7 +148,6 @@ public class Homepage extends Fragment{
 
         getSummonerId();
         //TODO fire off bus event to notify drawer
-        mBus.post(new ProfileUpdatedEvent());
     }
 
     @Override

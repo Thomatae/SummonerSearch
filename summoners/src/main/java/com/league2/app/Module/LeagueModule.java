@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import com.league2.app.activity.MainActivity;
 import com.league2.app.fragment.GeneralInfoFragment;
-import com.league2.app.fragment.Homepage;
+import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.fragment.RecentGamesFragment;
 import com.league2.app.Service.LeagueApi;
 import com.squareup.otto.Bus;
@@ -16,7 +16,7 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit.RestAdapter;
 
-@Module(injects = {Homepage.class,
+@Module(injects = {SetUpFragment.class,
                    GeneralInfoFragment.class,
                    RecentGamesFragment.class,
                    MainActivity.class},

@@ -1,8 +1,8 @@
 package com.league2.app.Module;
 
 import dagger.Module;
-import com.league2.app.fragment.Homepage;
+import com.league2.app.fragment.SetUpFragment;
 
-@Module(injects = Homepage.class, library = true, complete = false)
+@Module(injects = SetUpFragment.class, library = true, complete = false)
 public class ActivityModule {
 }

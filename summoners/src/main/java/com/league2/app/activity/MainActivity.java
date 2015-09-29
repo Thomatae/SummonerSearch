@@ -1,10 +1,11 @@
 package com.league2.app.activity;
 
 import android.content.Context;
-import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,13 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.adapter.DrawerAdapter;
+import com.league2.app.adapter.ViewPagerAdapter;
 import com.league2.app.event.ProfileUpdatedEvent;
-import com.league2.app.fragment.Homepage;
+import com.league2.app.event.UserIdEvent;
+import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.R;
+import com.league2.app.fragment.RankedFragment;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
@@ -35,9 +41,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ViewPager mViewPager;
+    private TabLayout mTabLayout;
+    private FrameLayout mContainer;
+
     private SharedPreferences mSharedPreferences;
 
     private String mUserName;
+    private long mUserId;
     private String TITLES[] = {"Home","Summoner Search", "Champions"};
     private int ICONS[] = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
 
@@ -50,17 +61,24 @@ public class MainActivity extends AppCompatActivity {
 
         DaggerApplication.inject(this);
 
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mTabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
+        mContainer = (FrameLayout) findViewById(R.id.fragment_container);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
         //check if user name exists
         mSharedPreferences = getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         if (mSharedPreferences.contains(getString(R.string.user_name))) {
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
+            mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
+            mContainer.setVisibility(View.GONE);
+            initializeViewPager();
         } else {
             mUserName = getString(R.string.default_user_name);
+            mUserId = 0;
+            initializeHomepageFragment();
         }
-
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
 
@@ -95,19 +113,41 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-
-
-        if (savedInstanceState == null) {
-            initializeHomepageFragment();
-        }
     }
 
+    private void initializeViewPager() {
+        initializeViewPagerAdapter();
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private void initializeViewPagerAdapter() {
+        //TODO Async Tasks here or inside Fragments themselves?
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.setUpAdapter(mUserId);
+        mViewPager.removeAllViews();
+        mViewPager.setAdapter(adapter);
+    }
+
+    /**
+     * This handles the user setting the profile name
+     * Also should initiate ViewPager and Tabs
+     * */
     @Subscribe
     public void onProfileUpdatedEvent(ProfileUpdatedEvent event) {
         if (mAdapter != null) {
-            mUserName = mSharedPreferences.getString(getString(R.string.user_id), getString(R.string.default_user_name));
+            mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
+            mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
             mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, R.drawable.ic_launcher);
+            mRecyclerView.setAdapter(mAdapter);
         }
+
+        mContainer.setVisibility(View.GONE);
+        initializeViewPager();
+    }
+
+    @Produce
+    public UserIdEvent onProduceUserIdEvent() {
+        return new UserIdEvent(mUserId);
     }
 
     @Override
@@ -140,6 +180,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeHomepageFragment() {
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new Homepage()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SetUpFragment()).commit();
     }
 }

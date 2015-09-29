@@ -14,6 +14,10 @@
     <string name="update">Update</string>
     <string name="user_name_hint">Summoner Name</string>
 
+    <!--View Pager Strings-->
+    <string name="ranked">Ranked</string>
+    <string name="empty_ranked"> There seems to be no ranked \n activity for this user.</string>
+
     <!--Old Strings-->
     <string name="app_name">Summoner Search</string>
     <string name="hello_world">Hello world!</string>

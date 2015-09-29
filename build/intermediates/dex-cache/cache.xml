@@ -30,6 +30,13 @@
         <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/javawriter-2.1.1-b7e12c8e7609f8c6e494865ed8656b7f7b62f127.jar" />
     </item>
     <item
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/design/22.2.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-d5ae5963446557d505bc8813f087c7f810041112.jar" />
+    </item>
+    <item
         jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="21.1.2"
@@ -42,13 +49,6 @@
         revision="21.1.2"
         sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7">
         <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-b6773515943217cd30555480472f8b2f5aa39243.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/cardview-v7/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="00b0b7233e1ec64acebfac40d4983d32d4712426">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-b41c89918880c01e3b218ab1a52c8cfb4370ef15.jar" />
     </item>
     <item
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.1.0/49f2061c938987c8e56679a731d74fd8448d8742/dagger-1.1.0.jar"
