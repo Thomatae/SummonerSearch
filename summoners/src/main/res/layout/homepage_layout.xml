@@ -62,6 +62,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"/>
 
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/update"
+                android:padding="15dp"
+                android:layout_alignBottom="@+id/update"
+                style="@android:style/Widget.ProgressBar.Small"/>
+
         </RelativeLayout>
 
     </com.league2.app.view.CustomCardView>

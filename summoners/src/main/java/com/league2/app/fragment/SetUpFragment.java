@@ -46,6 +46,7 @@ public class SetUpFragment extends Fragment{
     private CardView mGetStartedCard;
     private EditText mSummonerName;
     private Button mUpdate;
+    private ProgressBar mProgress;
 
     private String mUserName;
     private long mUserId = NO_USER_ID;
@@ -71,6 +72,8 @@ public class SetUpFragment extends Fragment{
         mGetStartedCard = (CardView) view.findViewById(R.id.add_user_card);
         mSummonerName = (EditText) view.findViewById(R.id.edit_user_name);
         mUpdate = (Button) view.findViewById(R.id.update);
+        mProgress = (ProgressBar) view.findViewById(R.id.progress);
+        mProgress.setVisibility(View.INVISIBLE);
 
         setUpdateName();
 
@@ -114,6 +117,7 @@ public class SetUpFragment extends Fragment{
     }
 
     private void getSummonerId() {
+        mProgress.setVisibility(View.VISIBLE);
         mLeagueApi.getSummonerStats(mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
             @Override
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
@@ -125,6 +129,7 @@ public class SetUpFragment extends Fragment{
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                mProgress.setVisibility(View.INVISIBLE);
                 Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
             }
         });
