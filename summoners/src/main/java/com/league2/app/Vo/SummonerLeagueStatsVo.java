@@ -12,8 +12,8 @@ public class SummonerLeagueStatsVo {
     public List<LeagueVo> entries;
     public String tier;
 
-    public LeagueVo getResutls() {
-        return entries.get(0);
+    public List<LeagueVo> getResults() {
+        return entries;
     }
 
 }

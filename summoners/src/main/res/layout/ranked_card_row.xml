@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.league2.app.view.CustomCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="5dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/queue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:text="League Tier"/>
+
+            <TextView
+                android:id="@+id/division"
+                android:textSize="16sp"
+                android:text="Division"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"/>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/league_points"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="@string/league_points"
+            android:layout_below="@id/header"/>
+
+        <TextView
+            android:id="@+id/league_points_value"
+            android:layout_toRightOf="@id/league_points"
+            android:layout_alignBaseline="@id/league_points"
+            android:paddingLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ranked_info_text_size"
+            tools:text="79"/>
+
+        <TextView
+            android:id="@+id/fresh_blood"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/league_points"
+            android:paddingRight="10dp"
+            android:text="@string/fresh_blood"/>
+
+        <TextView
+            android:id="@+id/wins"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="@string/wins"
+            android:layout_below="@id/league_points"/>
+
+        <TextView
+            android:id="@+id/wins_count"
+            android:layout_alignEnd="@id/league_points_value"
+            android:layout_alignRight="@id/league_points_value"
+            android:layout_alignBaseline="@id/wins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ranked_info_text_size"
+            tools:text="4000000"/>
+
+        <TextView
+            android:id="@+id/veteran"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/wins_count"
+            android:paddingRight="10dp"
+            android:text="@string/veteran"/>
+
+        <TextView
+            android:id="@+id/losses"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="@string/losses"
+            android:layout_below="@id/wins"/>
+
+        <TextView
+            android:id="@+id/losses_count"
+            android:layout_alignEnd="@id/wins_count"
+            android:layout_alignRight="@id/wins_count"
+            android:layout_alignBaseline="@id/losses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/ranked_info_text_size"
+            tools:text="345"/>
+
+        <TextView
+            android:id="@+id/hot_streak"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBaseline="@id/losses_count"
+            android:paddingRight="10dp"
+            android:text="@string/hot_streak"/>
+
+        <TextView
+            android:id="@+id/inactive"
+            android:textSize="@dimen/ranked_info_text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_below="@id/losses"
+            android:text="@string/inactive"/>
+
+    </RelativeLayout>
+
+</com.league2.app.view.CustomCardView>

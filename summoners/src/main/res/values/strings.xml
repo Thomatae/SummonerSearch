@@ -18,6 +18,16 @@
     <string name="ranked">Ranked</string>
     <string name="empty_ranked"> There seems to be no ranked \n activity for this user.</string>
 
+    <!--Ranked Strings-->
+    <string name="league_points">LP:</string>
+    <string name="wins">W:</string>
+    <string name="losses">L:</string>
+    <string name="hot_streak">Hot Streak</string>
+    <string name="veteran">Veteran</string>
+    <string name="inactive">Inactive</string>
+    <string name="fresh_blood">Fresh Blood</string>
+    <string name="loading_ranked">Your information is \n being loaded.</string>
+
     <!--Old Strings-->
     <string name="app_name">Summoner Search</string>
     <string name="hello_world">Hello world!</string>
@@ -29,7 +39,6 @@
     <string name="title_section3">Recent Games</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="current_rank">Current Rank:</string>
-    <string name="league_points">League Points:</string>
     <string name="series_progress">Series Progress:</string>
     <string name="not_available">N/A</string>
 

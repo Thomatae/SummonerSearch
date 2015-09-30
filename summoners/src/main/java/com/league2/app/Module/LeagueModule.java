@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import com.league2.app.activity.MainActivity;
 import com.league2.app.fragment.GeneralInfoFragment;
+import com.league2.app.fragment.RankedFragment;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.fragment.RecentGamesFragment;
 import com.league2.app.Service.LeagueApi;
@@ -19,7 +20,8 @@ import retrofit.RestAdapter;
 @Module(injects = {SetUpFragment.class,
                    GeneralInfoFragment.class,
                    RecentGamesFragment.class,
-                   MainActivity.class},
+                   MainActivity.class,
+                   RankedFragment.class},
         library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;
