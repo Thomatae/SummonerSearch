@@ -3,11 +3,10 @@ package com.league2.app.Module;
 import android.content.Context;
 import android.view.LayoutInflater;
 import com.league2.app.activity.MainActivity;
-import com.league2.app.fragment.GeneralInfoFragment;
 import com.league2.app.fragment.RankedFragment;
 import com.league2.app.fragment.SetUpFragment;
-import com.league2.app.fragment.RecentGamesFragment;
 import com.league2.app.Service.LeagueApi;
+import com.league2.app.fragment.SettingsFragment;
 import com.squareup.otto.Bus;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,10 +17,9 @@ import dagger.Provides;
 import retrofit.RestAdapter;
 
 @Module(injects = {SetUpFragment.class,
-                   GeneralInfoFragment.class,
-                   RecentGamesFragment.class,
                    MainActivity.class,
-                   RankedFragment.class},
+                   RankedFragment.class,
+                   SettingsFragment.class},
         library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;

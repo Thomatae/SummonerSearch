@@ -20,6 +20,8 @@ import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Vo.MasterLeagueVo;
 import com.league2.app.adapter.RankedAdapter;
+import com.league2.app.event.ProfileUpdatedEvent;
+import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
@@ -46,13 +48,14 @@ public class RankedFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         DaggerApplication.inject(this);
-        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
-        mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranked, null);
+
+        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
+        mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
 
         mEmpty = (TextView) view.findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ranked_recycler);
@@ -78,13 +81,11 @@ public class RankedFragment extends Fragment {
     }
 
     private void initializeAdapter(MasterLeagueVo masterLeagueVo) {
-        if (mAdapter == null) {
-            mAdapter = new RankedAdapter(getActivity(), masterLeagueVo.id);
-            mRecyclerView.setAdapter(mAdapter);
-            mLayoutManager = new LinearLayoutManager(getActivity());
-            mRecyclerView.setLayoutManager(mLayoutManager);
-            mProgressLayout.setVisibility(View.GONE);
-        }
+        mAdapter = new RankedAdapter(getActivity(), masterLeagueVo.id);
+        mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mProgressLayout.setVisibility(View.GONE);
     }
 
     @Override

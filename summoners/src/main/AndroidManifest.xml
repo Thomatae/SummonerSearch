@@ -23,6 +23,12 @@
             android:name="com.league2.app.activity.InfoPagerActivity">
 
         </activity>
+
+        <activity android:name=".activity.SettingsActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.preference"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

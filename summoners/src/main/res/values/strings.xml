@@ -7,6 +7,8 @@
     <string name="user_id">user_id</string>
     <string name="default_user_name">Not Set</string>
     <string name="api_key">ddb565ce-33ad-435f-ac6c-82882a99c6f6</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
 
     <!--Home Page String-->
     <string name="get_started">Get Started</string>
@@ -27,6 +29,10 @@
     <string name="inactive">Inactive</string>
     <string name="fresh_blood">Fresh Blood</string>
     <string name="loading_ranked">Your information is \n being loaded.</string>
+
+    <!--Settings Fragment-->
+    <string name="clear_user_title">Clear User Profile</string>
+    <string name="clear_user_desc">Are you sure you want to clear your profile?</string>
 
     <!--Old Strings-->
     <string name="app_name">Summoner Search</string>

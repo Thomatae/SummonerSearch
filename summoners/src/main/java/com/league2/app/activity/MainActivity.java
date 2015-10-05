@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +25,7 @@ import com.league2.app.event.ProfileUpdatedEvent;
 import com.league2.app.event.UserIdEvent;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.R;
-import com.league2.app.fragment.RankedFragment;
+import com.league2.app.fragment.SettingsFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -44,13 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FrameLayout mContainer;
-
+    private ViewPagerAdapter mViewPagerAdapter;
     private SharedPreferences mSharedPreferences;
 
     private String mUserName;
     private long mUserId;
     private String TITLES[] = {"Home","Summoner Search", "Champions"};
     private int ICONS[] = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
+    private boolean mClearedData;
 
     @Inject Bus mBus;
 
@@ -92,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.open_drawer, R.string.close_drawer) {
 
@@ -111,21 +112,31 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mDrawerToggle.isDrawerIndicatorEnabled()) {
+                    backArrowClicked();
+                }
+            }
+        });
         mDrawer.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
 
     private void initializeViewPager() {
         initializeViewPagerAdapter();
+        mTabLayout.setVisibility(View.VISIBLE);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
     private void initializeViewPagerAdapter() {
         //TODO Async Tasks here or inside Fragments themselves?
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.setUpAdapter(mUserId);
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter.clearAdapter();
+        mViewPagerAdapter.setUpAdapter(mUserId);
         mViewPager.removeAllViews();
-        mViewPager.setAdapter(adapter);
+        mViewPager.setAdapter(mViewPagerAdapter);
     }
 
     /**
@@ -134,15 +145,31 @@ public class MainActivity extends AppCompatActivity {
      * */
     @Subscribe
     public void onProfileUpdatedEvent(ProfileUpdatedEvent event) {
+        if (event.isClear) {
+            mClearedData = true;
+            clearProfile();
+            updateMenuAdapter();
+        } else {
+            mContainer.setVisibility(View.GONE);
+            updateMenuAdapter();
+            initializeViewPager();
+        }
+    }
+
+    private void updateMenuAdapter() {
         if (mAdapter != null) {
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
             mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, R.drawable.ic_launcher);
             mRecyclerView.setAdapter(mAdapter);
         }
+    }
 
-        mContainer.setVisibility(View.GONE);
-        initializeViewPager();
+    private void clearProfile() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.remove(getString(R.string.user_id));
+        editor.remove(getString(R.string.user_name));
+        editor.apply();
     }
 
     @Produce
@@ -173,13 +200,48 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                startPreferenceFragment();
+                return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
+    private void backArrowClicked() {
+        if (mClearedData || mUserId == 0) {
+            replaceFragment(new SetUpFragment());
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mClearedData = false;
+        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+            mContainer.setVisibility(View.GONE);
+            mTabLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void startPreferenceFragment() {
+        mContainer.setVisibility(View.VISIBLE);
+        mTabLayout.setVisibility(View.GONE);
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+
+        replaceFragment(new SettingsFragment());
+    }
+
     private void initializeHomepageFragment() {
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SetUpFragment()).commit();
+        //TODO hide view pager stuff
+        mTabLayout.setVisibility(View.GONE);
+        mContainer.setVisibility(View.VISIBLE);
+        addFragment(new SetUpFragment());
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
+    private void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
     }
 }

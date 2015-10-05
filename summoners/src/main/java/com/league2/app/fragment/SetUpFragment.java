@@ -36,7 +36,7 @@ public class SetUpFragment extends Fragment{
     public static final String TITLE = "Set Up";
 
     private static final String ARG_USER_NAME = "user_name";
-    private static final long NO_USER_ID = -1;
+    private static final long NO_USER_ID = 0;
 
     @Inject LeagueApi mLeagueApi;
 
@@ -123,7 +123,7 @@ public class SetUpFragment extends Fragment{
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
                 if (summonerInfoVo.getResults().getSummonerId() != 0) {
                     updateUserId(summonerInfoVo.getResults().getSummonerId());
-                    mBus.post(new ProfileUpdatedEvent());
+                    mBus.post(new ProfileUpdatedEvent(false));
                 }
             }
 
@@ -141,7 +141,6 @@ public class SetUpFragment extends Fragment{
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(getString(R.string.user_id), userId);
         editor.apply();
-        //TODO fire off bus event to notify drawer
     }
 
     private void updateUsername(String userName) {
@@ -152,7 +151,6 @@ public class SetUpFragment extends Fragment{
         editor.apply();
 
         getSummonerId();
-        //TODO fire off bus event to notify drawer
     }
 
     @Override
