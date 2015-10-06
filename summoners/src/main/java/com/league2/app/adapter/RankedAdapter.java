@@ -48,6 +48,25 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
         holder.veteran.setTextColor(getVariableColor(leagueVo.isVeteran));
         holder.hotStreak.setTextColor(getVariableColor(leagueVo.isHotStreak));
         holder.inactive.setTextColor(getVariableColor(leagueVo.isInactive));
+
+        if (leagueVo.miniSeries == null) {
+            holder.footer.setVisibility(View.GONE);
+        } else {
+            String progress = leagueVo.miniSeries.progress;
+            progress = progress.replace('N', '-');
+            String formatted = "";
+
+            //format the progress to have a space between each letter or dash
+            for (int i = 0; i < progress.length(); i++) {
+                formatted = formatted + progress.charAt(i);
+
+                if (i != progress.length()) {
+                    formatted = formatted + " ";
+                }
+            }
+
+            holder.provisional_status.setText(formatted);
+        }
     }
 
     @Override
@@ -58,6 +77,7 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout header;
+        LinearLayout footer;
         TextView queue;
         TextView division;
         TextView leaguePointsValue;
@@ -67,12 +87,14 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
         TextView veteran;
         TextView hotStreak;
         TextView inactive;
+        TextView provisional_status;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             header = (LinearLayout) itemView.findViewById(R.id.header);
+            footer = (LinearLayout) itemView.findViewById(R.id.provisional_layout);
             queue = (TextView) itemView.findViewById(R.id.queue);
             division = (TextView) itemView.findViewById(R.id.division);
             leaguePointsValue = (TextView) itemView.findViewById(R.id.league_points_value);
@@ -82,6 +104,7 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
             veteran = (TextView) itemView.findViewById(R.id.veteran);
             hotStreak = (TextView) itemView.findViewById(R.id.hot_streak);
             inactive = (TextView) itemView.findViewById(R.id.inactive);
+            provisional_status = (TextView) itemView.findViewById(R.id.provisional_status);
         }
     }
 
@@ -91,9 +114,9 @@ public class RankedAdapter extends RecyclerView.Adapter<RankedAdapter.ViewHolder
 
     private int getVariableColor(boolean active) {
         if (active) {
-            return R.color.disabled_gray;
+            return getColor(R.color.enabled_black);
         } else {
-            return R.color.enabled_black;
+            return getColor(R.color.disabled_gray);
         }
     }
 

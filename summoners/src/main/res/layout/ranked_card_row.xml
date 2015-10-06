@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
+            android:textColor="@color/enabled_black"
             android:text="@string/league_points"
             android:layout_below="@id/header"/>
 
@@ -59,6 +60,7 @@
             android:layout_toRightOf="@id/league_points"
             android:layout_alignBaseline="@id/league_points"
             android:paddingLeft="40dp"
+            android:textColor="@color/enabled_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ranked_info_text_size"
@@ -80,6 +82,7 @@
             android:textSize="@dimen/ranked_info_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/enabled_black"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:text="@string/wins"
@@ -90,6 +93,7 @@
             android:layout_alignEnd="@id/league_points_value"
             android:layout_alignRight="@id/league_points_value"
             android:layout_alignBaseline="@id/wins"
+            android:textColor="@color/enabled_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ranked_info_text_size"
@@ -111,6 +115,7 @@
             android:textSize="@dimen/ranked_info_text_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/enabled_black"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:text="@string/losses"
@@ -121,6 +126,7 @@
             android:layout_alignEnd="@id/wins_count"
             android:layout_alignRight="@id/wins_count"
             android:layout_alignBaseline="@id/losses"
+            android:textColor="@color/enabled_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/ranked_info_text_size"
@@ -149,6 +155,42 @@
             android:paddingBottom="10dp"
             android:layout_below="@id/losses"
             android:text="@string/inactive"/>
+
+        <LinearLayout
+            android:id="@+id/provisional_layout"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/inactive"
+            android:layout_height="wrap_content">
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/provisional"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="Provisionals:"
+                    android:textColor="@color/enabled_black"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/provisional_status"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </RelativeLayout>
 

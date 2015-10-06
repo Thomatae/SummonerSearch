@@ -20,8 +20,6 @@ import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Vo.MasterLeagueVo;
 import com.league2.app.adapter.RankedAdapter;
-import com.league2.app.event.ProfileUpdatedEvent;
-import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
