@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +22,11 @@ import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
-import com.league2.app.Service.HomePageRetrievalTask;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.SummonerErrorHandler;
 import com.league2.app.Vo.SummonerInfoVo;
 import com.league2.app.event.ProfileUpdatedEvent;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
@@ -37,6 +36,7 @@ public class SetUpFragment extends Fragment{
 
     private static final String ARG_USER_NAME = "user_name";
     private static final long NO_USER_ID = 0;
+    private static final int NO_ICON_ID = 0;
 
     @Inject LeagueApi mLeagueApi;
 
@@ -50,6 +50,7 @@ public class SetUpFragment extends Fragment{
 
     private String mUserName;
     private long mUserId = NO_USER_ID;
+    private int mProfileIconId = NO_ICON_ID;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class SetUpFragment extends Fragment{
         SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         mUserName = preferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
         mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
+        mProfileIconId = preferences.getInt(getString(R.string.user_profile_icon_id), NO_ICON_ID);
     }
 
     @Override
@@ -111,6 +113,7 @@ public class SetUpFragment extends Fragment{
                 //TODO add spinner to notify loading
                 if (!mSummonerName.getText().toString().equals("")) {
                     updateUsername(mSummonerName.getText().toString());
+                    getSummonerId();
                 }
             }
         });
@@ -122,7 +125,8 @@ public class SetUpFragment extends Fragment{
             @Override
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
                 if (summonerInfoVo.getResults().getSummonerId() != 0) {
-                    updateUserId(summonerInfoVo.getResults().getSummonerId());
+                    updateUserId(summonerInfoVo.getResults().getSummonerId(), summonerInfoVo.getResults().getProfileIconId());
+                    updateUsername(summonerInfoVo.getResults().name);
                     mBus.post(new ProfileUpdatedEvent(false));
                 }
             }
@@ -130,16 +134,19 @@ public class SetUpFragment extends Fragment{
             @Override
             public void failure(RetrofitError retrofitError) {
                 mProgress.setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(), "Sorry there was an issue with your search", Toast.LENGTH_SHORT);
+                retrofitError.printStackTrace();
+                Toast.makeText(getActivity(), "Sorry there was an issue with your summoner name", Toast.LENGTH_SHORT);
             }
         });
     }
 
-    private void updateUserId(long userId) {
+    private void updateUserId(long userId, int profileIconId) {
         mUserId = userId;
+        mProfileIconId = profileIconId;
         SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(getString(R.string.user_id), userId);
+        editor.putInt(getString(R.string.user_profile_icon_id), profileIconId);
         editor.apply();
     }
 
@@ -149,8 +156,6 @@ public class SetUpFragment extends Fragment{
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(getString(R.string.user_name), userName);
         editor.apply();
-
-        getSummonerId();
     }
 
     @Override

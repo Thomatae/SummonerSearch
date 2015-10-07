@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String mUserName;
     private long mUserId;
+    private int mProfileIconId;
     private String TITLES[] = {"Home","Summoner Search", "Champions"};
-    private int ICONS[] = {R.drawable.ic_launcher, R.drawable.ic_launcher, R.drawable.ic_launcher};
+    private int ICONS[] = {R.drawable.ic_home, R.drawable.ic_action, R.drawable.ic_champions};
     private boolean mClearedData;
 
     @Inject Bus mBus;
@@ -74,11 +76,13 @@ public class MainActivity extends AppCompatActivity {
         if (mSharedPreferences.contains(getString(R.string.user_name))) {
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
+            mProfileIconId = mSharedPreferences.getInt(getString(R.string.user_profile_icon_id), 0);
             mContainer.setVisibility(View.GONE);
             initializeViewPager();
         } else {
             mUserName = getString(R.string.default_user_name);
             mUserId = 0;
+            mProfileIconId = 0;
             initializeHomepageFragment();
         }
 
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new DrawerAdapter(this,TITLES , ICONS, mUserName, R.drawable.ic_launcher);
+        mAdapter = new DrawerAdapter(this,TITLES , ICONS, mUserName, mProfileIconId);
 
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
 
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO Async Tasks here or inside Fragments themselves?
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPagerAdapter.clearAdapter();
+        Log.d("UserId main: ", mUserId + "");
         mViewPagerAdapter.setUpAdapter(mUserId);
         mViewPager.removeAllViews();
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -160,7 +165,8 @@ public class MainActivity extends AppCompatActivity {
         if (mAdapter != null) {
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
-            mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, R.drawable.ic_launcher);
+            mProfileIconId = mSharedPreferences.getInt(getString(R.string.user_profile_icon_id), 0);
+            mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, mProfileIconId);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -169,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.remove(getString(R.string.user_id));
         editor.remove(getString(R.string.user_name));
+        editor.remove(getString(R.string.user_profile_icon_id));
         editor.apply();
     }
 

@@ -13,4 +13,8 @@ public class SummonerVo {
     public long getSummonerId() {
         return id;
     }
+
+    public int getProfileIconId() {
+        return profileIconId;
+    }
 }

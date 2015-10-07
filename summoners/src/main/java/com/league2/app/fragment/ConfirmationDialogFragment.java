@@ -46,12 +46,4 @@ public class ConfirmationDialogFragment extends DialogFragment {
         // Create the AlertDialog object and return it
         return builder.create();
     }
-
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        //TODO this doesnt work
-//        //post a bus event? or have main activity handle it
-//        mConfirmationDialgoFragmentListener = (ConfirmationDialgoFragmentListener) activity;
-//    }
 }

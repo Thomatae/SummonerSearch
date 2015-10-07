@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import javax.inject.Inject;
 public class RankedFragment extends Fragment {
 
     public static final String TITLE = "Ranked";
-    private static final long NO_USER_ID = -1;
+    private static final long NO_USER_ID = 0;
 
     private TextView mEmpty;
     private RecyclerView mRecyclerView;
@@ -73,6 +74,7 @@ public class RankedFragment extends Fragment {
 
             @Override
             public void failure(RetrofitError retrofitError) {
+                retrofitError.printStackTrace();
                 Toast.makeText(getActivity(), "Sorry there was an issue with your results", Toast.LENGTH_LONG).show();
             }
         });

@@ -20,6 +20,6 @@ public interface LeagueApi {
     @GET("/v2.5/league/by-summoner/{id}/entry")
     void getSummonerLeagueStats(@Path("id") long id, @Query("api_key") String apiKey, Callback<MasterLeagueVo> callback);
 
-    @GET("/v1.4/game/by-summoner/{id}/recent")
+    @GET("/v1.3/game/by-summoner/{id}/recent")
     RecentGamesVo getRecentGames(@Path("id") long id, @Query("api_key") String apiKey);
 }

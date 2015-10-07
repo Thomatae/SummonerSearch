@@ -37,6 +37,13 @@
         <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-d5ae5963446557d505bc8813f087c7f810041112.jar" />
     </item>
     <item
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/picasso-2.5.2-dfdc242169ab25539f609b918713357d00a61270.jar" />
+    </item>
+    <item
         jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="21.1.2"

@@ -2,12 +2,14 @@ package com.league2.app.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.league2.app.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Trever on 7/30/2015.
@@ -57,7 +59,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             viewHolder.itemIcon.setImageResource(mItemIconIds[position -1]);
         }
         else{
-            viewHolder.summonerIcon.setImageResource(mSummonerIcon);
+            String formattedURL = String.format(getString(R.string.dragon_url), getString(R.string.profile_icon), mSummonerIcon);
+            Picasso.with(mContext).load(formattedURL).into(viewHolder.summonerIcon);
             viewHolder.summonerName.setText(mSummonerName);
         }
     }
@@ -91,6 +94,10 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         }
 
 
+    }
+
+    public String getString(int stringId) {
+        return mContext.getResources().getString(stringId);
     }
 
     @Override
