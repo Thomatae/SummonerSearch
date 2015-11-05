@@ -1,6 +1,7 @@
 package com.league2.app.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +24,23 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
     private int mItemIconIds[];
     private String mSummonerName;
     private int mSummonerIcon;
+    private NavigationListener mNavigationListener;
 
     private Context mContext;
 
-    public DrawerAdapter(Context context, String[] itemTitles, int[] itemIconIds, String summonerName, int summonerIcon) {
-        mContext = context;
+    public interface NavigationListener {
+        void startHome();
+        void startSummonerSearch();
+        void startChampionSearch();
+    }
 
+    private interface OnClickListener {
+        void onClick(View view, int position);
+    }
+
+    public DrawerAdapter(Context context, NavigationListener listener, String[] itemTitles, int[] itemIconIds, String summonerName, int summonerIcon) {
+        mContext = context;
+        mNavigationListener = listener;
         mItemTitles = itemTitles;
         mItemIconIds = itemIconIds;
         mSummonerName = summonerName;
@@ -63,6 +75,13 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
             Picasso.with(mContext).load(formattedURL).into(viewHolder.summonerIcon);
             viewHolder.summonerName.setText(mSummonerName);
         }
+
+        viewHolder.setClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                handleOnClick(mItemTitles[position]);
+            }
+        });
     }
 
     @Override
@@ -70,19 +89,22 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         return mItemTitles.length + 1;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         int HolderId;
 
         TextView itemTitle;
         ImageView itemIcon;
         ImageView summonerIcon;
         TextView summonerName;
+        OnClickListener clickListener;
 
 
-        public ViewHolder(View itemView,int ViewType) {
+        public ViewHolder(View itemView, int ViewType) {
             super(itemView);
+            itemView.setOnClickListener(this);
 
             if(ViewType == TYPE_ITEM) {
+                itemView.setOnClickListener(this);
                 itemTitle = (TextView) itemView.findViewById(R.id.item_title);
                 itemIcon = (ImageView) itemView.findViewById(R.id.icon);
                 HolderId = 1;
@@ -94,6 +116,30 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
         }
 
 
+        @Override
+        public void onClick(View v) {
+            if (HolderId == 1) {
+                clickListener.onClick(v, getPosition() - 1);
+            }
+        }
+
+        public void setClickListener(OnClickListener listener) {
+            clickListener = listener;
+        }
+    }
+
+    private void handleOnClick(String title) {
+        switch (title) {
+            case "Home":
+                mNavigationListener.startHome();
+                break;
+            case "Summoner Search":
+                mNavigationListener.startSummonerSearch();
+                break;
+            case "Champions":
+                mNavigationListener.startChampionSearch();
+                break;
+        }
     }
 
     public String getString(int stringId) {

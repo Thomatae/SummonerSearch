@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.adapter.DrawerAdapter;
@@ -33,7 +34,7 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DrawerAdapter.NavigationListener {
 
     public static final String SUMMONER_ID = "summonerId";
 
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
 
-        mAdapter = new DrawerAdapter(this,TITLES , ICONS, mUserName, mProfileIconId);
+        mAdapter = new DrawerAdapter(this, this, TITLES , ICONS, mUserName, mProfileIconId);
 
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
 
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
             mProfileIconId = mSharedPreferences.getInt(getString(R.string.user_profile_icon_id), 0);
-            mAdapter = new DrawerAdapter(this, TITLES, ICONS, mUserName, mProfileIconId);
+            mAdapter = new DrawerAdapter(this, this, TITLES, ICONS, mUserName, mProfileIconId);
             mRecyclerView.setAdapter(mAdapter);
         }
     }
@@ -250,5 +251,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void addFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+    }
+
+    @Override
+    public void startHome() {
+        Toast.makeText(this, "HOME", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startSummonerSearch() {
+        Toast.makeText(this, "Summoner", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void startChampionSearch() {
+        Toast.makeText(this, "Champion", Toast.LENGTH_SHORT).show();
     }
 }
