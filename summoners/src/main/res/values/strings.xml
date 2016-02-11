@@ -36,6 +36,9 @@
     <string name="fresh_blood">Fresh Blood</string>
     <string name="loading_ranked">Your information is \n being loaded.</string>
 
+    <!-- Game Strings-->
+    <string name="kills_death_assist">%1$d/%2$d/%3$d</string>
+
     <!--Settings Fragment-->
     <string name="clear_user_title">Clear User Profile</string>
     <string name="clear_user_desc">Are you sure you want to clear your profile?</string>

@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.league2.app.fragment.GamesFragment;
 import com.league2.app.fragment.RankedFragment;
 import com.league2.app.fragment.SetUpFragment;
 
@@ -30,6 +31,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public void setUpAdapter(long userId) {
         if (userId != 0) {
             addFrag(new RankedFragment(), RankedFragment.getTitle());
+            addFrag(new GamesFragment(), GamesFragment.getTitle());
         }
     }
 

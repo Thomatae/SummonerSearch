@@ -1,70 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.league2.app.view.CustomCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="65dp"
-    android:padding="10dp"
-    android:background="#ff858585"
+    android:layout_margin="10dp"
+    android:minHeight="70dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="5dp"
     tools:context="com.league2.app.fragment.RecentGamesFragment">
 
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nameAndIcon"
-        android:layout_alignParentStart="true"
-        android:orientation="horizontal">
-
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/champion_icon"/>
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:id="@+id/game_title">
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/champion_name"
-                tools:text="Alistar"/>
+                android:id="@+id/subType"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                tools:text="RANKED SOLO 5x5"/>
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/game_mode"
-                android:layout_below="@+id/champion_name"
-                tools:text="ARAMS"/>
-
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/goldEarned"
-                tools:text="13.4k"/>
+                android:id="@+id/gameMode"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                tools:text="CLASSIC"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/game_title"
+            android:id="@+id/image_layout"
+            android:paddingLeft="15dp">
 
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/wins_spells"
-        android:orientation="vertical"
-        android:layout_alignParentEnd="true">
+            <ImageView android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/championIcon"
+                android:paddingRight="5dp"
+                android:src="@drawable/ic_launcher"/>
+
+            <LinearLayout android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:orientation="vertical">
+
+                <ImageView android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/summoner_spell_one"
+                    android:src="@drawable/ic_launcher"/>
+
+                <ImageView android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/summoner_spell_two"
+                    android:src="@drawable/ic_launcher"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/kills_death_assists"
-            tools:text="3/11/20"/>
+            android:id="@+id/game_date"
+            android:layout_below="@id/image_layout"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            tools:text="3/27/2015"/>
 
         <TextView android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/minionKills"
-            tools:text="CS: 138"/>
+            android:id="@+id/game_length"
+            android:layout_below="@+id/game_date"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingBottom="10dp"
+            android:paddingLeft="15dp"
+            tools:text="32:30"/>
 
-        <TextView android:layout_width="wrap_content"
+        <LinearLayout android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date"
-            tools:text="Aug 18, 3:45pm"/>
+            android:id="@+id/quick_info"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/game_title"
+            android:paddingRight="15dp">
 
-    </LinearLayout>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/kill_death_assist"
+                android:textSize="16sp"
+                tools:text="13/13/13"/>
 
-</RelativeLayout>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/creep_score"
+                android:textSize="16sp"
+                tools:text="134"/>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gold_earned"
+                android:textSize="16sp"
+                tools:text="13.2k"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</com.league2.app.view.CustomCardView>

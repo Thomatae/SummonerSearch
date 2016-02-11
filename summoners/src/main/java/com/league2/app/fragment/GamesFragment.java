@@ -6,6 +6,7 @@ import retrofit.client.Response;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,21 +16,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.league2.app.Module.ChampionsVo;
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
-import com.league2.app.Vo.MasterLeagueVo;
-import com.league2.app.adapter.RankedAdapter;
+import com.league2.app.Service.StaticLeagueApi;
+import com.league2.app.Vo.Champion;
+import com.league2.app.Vo.GameVo;
+import com.league2.app.Vo.RecentGamesVo;
+import com.league2.app.adapter.RecentGamesAdapter;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by trethoma1 on 9/28/15.
+ * Created by trethoma1 on 11/5/15.
  */
-public class RankedFragment extends Fragment {
 
-    public static final String TITLE = "Ranked";
+/*
+    This fragment is to house recent games and ranked games
+
+    Idea: Have a filter for Ranked and Normal
+ */
+public class GamesFragment extends Fragment {
+
+    private static final String TITLE = "Games";
+
     private static final long NO_USER_ID = 0;
 
     private TextView mEmpty;
@@ -42,6 +55,8 @@ public class RankedFragment extends Fragment {
 
     @Inject LeagueApi mLeagueApi;
 
+    @Inject StaticLeagueApi mStaticLeagueApi;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +64,10 @@ public class RankedFragment extends Fragment {
         DaggerApplication.inject(this);
     }
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ranked, null);
+        View view = inflater.inflate(R.layout.fragment_games, null);
 
         SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
         mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
@@ -60,37 +76,49 @@ public class RankedFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ranked_recycler);
         mProgressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
 
-        getLeagueInformation();
+        getGames();
 
         return view;
     }
 
-    private void getLeagueInformation() {
-        mLeagueApi.getSummonerLeagueStats("na", mUserId, getString(R.string.api_key), new Callback<MasterLeagueVo>() {
+    private void getGames() {
+        mLeagueApi.getRecentGames("na", mUserId, getString(R.string.api_key), new Callback<RecentGamesVo>() {
             @Override
-            public void success(MasterLeagueVo masterLeagueVo, Response response) {
-                initializeAdapter(masterLeagueVo);
+            public void success(RecentGamesVo recentGamesVo, Response response) {
+                //After getting games, will need to grab champion info
+                //possibly also spell info for icons
+                getChampions(recentGamesVo);
             }
 
             @Override
             public void failure(RetrofitError retrofitError) {
-                retrofitError.printStackTrace();
-                Toast.makeText(getActivity(), "Sorry there was an issue with your results", Toast.LENGTH_LONG).show();
+
             }
         });
     }
 
-    private void initializeAdapter(MasterLeagueVo masterLeagueVo) {
-        mAdapter = new RankedAdapter(getActivity(), masterLeagueVo.id);
+    private void getChampions(final RecentGamesVo recentGamesVo) {
+        mStaticLeagueApi.getChampions("na", getString(R.string.api_key), true, "all", new Callback<ChampionsVo>() {
+            @Override
+            public void success(ChampionsVo championsVo, Response response) {
+                initializeAdapter(recentGamesVo, championsVo);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+
+            }
+        });
+
+    }
+
+    private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo) {
+        Log.d("Loop:", "intialize adapter");
+        mAdapter = new RecentGamesAdapter(getActivity(), recentGamesVo.getGames(), championsVo);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mProgressLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 
     public static String getTitle() {

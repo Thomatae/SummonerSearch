@@ -5,6 +5,8 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GameVo {
 
+    public long gameId;
+    public int championId;
     public long createDate;
     public String gameMode;
     public String gameType;

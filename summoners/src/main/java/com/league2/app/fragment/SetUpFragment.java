@@ -121,7 +121,7 @@ public class SetUpFragment extends Fragment{
 
     private void getSummonerId() {
         mProgress.setVisibility(View.VISIBLE);
-        mLeagueApi.getSummonerStats(mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
+        mLeagueApi.getSummonerStats("na",mUserName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
             @Override
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
                 if (summonerInfoVo.getResults().getSummonerId() != 0) {

@@ -2,7 +2,10 @@ package com.league2.app.Module;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import com.league2.app.Service.StaticLeagueApi;
 import com.league2.app.activity.MainActivity;
+import com.league2.app.adapter.RecentGamesAdapter;
+import com.league2.app.fragment.GamesFragment;
 import com.league2.app.fragment.RankedFragment;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.Service.LeagueApi;
@@ -19,20 +22,19 @@ import retrofit.RestAdapter;
 @Module(injects = {SetUpFragment.class,
                    MainActivity.class,
                    RankedFragment.class,
-                   SettingsFragment.class},
+                   SettingsFragment.class,
+                   GamesFragment.class,
+                   RecentGamesAdapter.class},
         library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;
     private final ObjectMapper mapper = new ObjectMapper();
-    private static String LEAGUE_API = "https://na.api.pvp.net/api/lol/na";
+    private final static String LEAGUE_API = "https://na.api.pvp.net/api/lol";
+    private final static String STATIC_LEAGUE_API = "https://global.api.pvp.net/api/lol/static-data";
 
     public LeagueModule(DaggerApplication application) {
         this.application = application;
     }
-
-    //TODO create another RestAdapter, one for static data
-    //TODo will need another StaticApi
-    //TODO probably need to make a custom class
 
     @Provides @Singleton
     RestAdapter provideRestAdapter() {
@@ -56,6 +58,12 @@ public class LeagueModule {
     @Singleton
     public LeagueApi provideLeagueApi(RestAdapter restAdapter) {
         return restAdapter.create(LeagueApi.class);
+    }
+
+    @Provides
+    @Singleton
+    public StaticLeagueApi provideStaticLeagueApi() {
+        return new RestAdapter.Builder().setEndpoint(STATIC_LEAGUE_API).setConverter(new JacksonConverter(mapper)).build().create(StaticLeagueApi.class);
     }
 
     @Provides
