@@ -6,6 +6,7 @@ import retrofit.http.Path;
 import retrofit.http.Query;
 import com.league2.app.Module.ChampionsVo;
 import com.league2.app.Vo.Champion;
+import com.league2.app.Vo.SummonerSpellsVo;
 
 /**
  * Created by trethoma1 on 12/4/15.
@@ -19,4 +20,6 @@ public interface StaticLeagueApi {
     @GET("/{region}/v1.2/champion/{id}")
     void getChampion(@Path("region") String region, @Path("id") int id, @Query("champData") String champData, @Query("api_key") String apiKey, Callback<Champion> callback);
 
+    @GET("/{region}/v1.2/summoner-spell")
+    void getSummonerSpells(@Path("region") String region, @Query("dataById") boolean dataById, @Query("spellData") String spellData, @Query("api_key") String apiKey, Callback<SummonerSpellsVo> callback);
 }

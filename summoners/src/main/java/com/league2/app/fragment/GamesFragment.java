@@ -24,6 +24,7 @@ import com.league2.app.Service.StaticLeagueApi;
 import com.league2.app.Vo.Champion;
 import com.league2.app.Vo.GameVo;
 import com.league2.app.Vo.RecentGamesVo;
+import com.league2.app.Vo.SummonerSpellsVo;
 import com.league2.app.adapter.RecentGamesAdapter;
 
 import javax.inject.Inject;
@@ -101,7 +102,7 @@ public class GamesFragment extends Fragment {
         mStaticLeagueApi.getChampions("na", getString(R.string.api_key), true, "all", new Callback<ChampionsVo>() {
             @Override
             public void success(ChampionsVo championsVo, Response response) {
-                initializeAdapter(recentGamesVo, championsVo);
+                getSummonerSpells(recentGamesVo, championsVo);
             }
 
             @Override
@@ -112,9 +113,23 @@ public class GamesFragment extends Fragment {
 
     }
 
-    private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo) {
+    private void getSummonerSpells(final RecentGamesVo recentGamesVo, final ChampionsVo championsVo) {
+        mStaticLeagueApi.getSummonerSpells("na", true, "all", getString(R.string.api_key), new Callback<SummonerSpellsVo>() {
+            @Override
+            public void success(SummonerSpellsVo summonerSpellsVo, Response response) {
+                initializeAdapter(recentGamesVo, championsVo, summonerSpellsVo);
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+
+            }
+        });
+    }
+
+    private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo, SummonerSpellsVo summonerSpellsVo) {
         Log.d("Loop:", "intialize adapter");
-        mAdapter = new RecentGamesAdapter(getActivity(), recentGamesVo.getGames(), championsVo);
+        mAdapter = new RecentGamesAdapter(getActivity(), recentGamesVo.getGames(), championsVo, summonerSpellsVo);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);

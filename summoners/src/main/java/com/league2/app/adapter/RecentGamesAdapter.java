@@ -20,6 +20,7 @@ import com.league2.app.Service.StaticLeagueApi;
 import com.league2.app.Vo.Champion;
 import com.league2.app.Vo.GameStatsVo;
 import com.league2.app.Vo.GameVo;
+import com.league2.app.Vo.SummonerSpellsVo;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -38,15 +39,17 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
     private List<GameVo> mGameVos;
     private SimpleDateFormat mDateFormatter;
     private ChampionsVo mChampions;
+    private SummonerSpellsVo mSummonerSpellsVo;
 
     @Inject
     StaticLeagueApi mStaticLeagueApi;
 
     //TODO will need to have List<ChampionNames>
-    public RecentGamesAdapter(Context context, List<GameVo> gameVos, ChampionsVo championIds) {
+    public RecentGamesAdapter(Context context, List<GameVo> gameVos, ChampionsVo champions, SummonerSpellsVo summonerSpellsVo) {
         mContext = context;
         mGameVos = gameVos;
-        mChampions = championIds;
+        mChampions = champions;
+        mSummonerSpellsVo = summonerSpellsVo;
         mDateFormatter = new SimpleDateFormat("yyyy/MM/dd");
     }
 
@@ -67,9 +70,16 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
 
         //TODO set ImageViews
         String championId = Integer.toString(gameVo.championId);
-        Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/5.22.1/img/champion/" + mChampions.data.get(championId).image.full)
+        Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/champion/" + mChampions.data.get(championId).image.full)
                .placeholder(R.drawable.ic_launcher)
                .into(holder.championIcon);
+
+
+        Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(gameVo.spell1)).image.full)
+               .into(holder.summonerSpellOne);
+
+        Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(gameVo.spell2)).image.full)
+               .into(holder.summonerSpellTwo);
 
         holder.gameDate.setText(mDateFormatter.format(new Date(gameVo.createDate)));
         holder.gameLength.setText("Game Length: " + Integer.toString(stats.timePlayed / 60));
