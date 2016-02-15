@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     private String mUserName;
     private long mUserId;
     private int mProfileIconId;
-    private String TITLES[] = {"Home","Summoner Search", "Champions"};
+    private String TITLES[] = {"Home","Summoner Search", "Favorites"};
     private int ICONS[] = {R.drawable.ic_home, R.drawable.ic_action, R.drawable.ic_champions};
     private boolean mClearedData;
 

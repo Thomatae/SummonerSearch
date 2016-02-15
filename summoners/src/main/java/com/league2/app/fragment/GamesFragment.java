@@ -26,6 +26,7 @@ import com.league2.app.Vo.GameVo;
 import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerSpellsVo;
 import com.league2.app.adapter.RecentGamesAdapter;
+import com.league2.app.util.CoreConstants;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -83,7 +84,7 @@ public class GamesFragment extends Fragment {
     }
 
     private void getGames() {
-        mLeagueApi.getRecentGames("na", mUserId, getString(R.string.api_key), new Callback<RecentGamesVo>() {
+        mLeagueApi.getRecentGames(CoreConstants.REGION_NA, mUserId, getString(R.string.api_key), new Callback<RecentGamesVo>() {
             @Override
             public void success(RecentGamesVo recentGamesVo, Response response) {
                 //After getting games, will need to grab champion info
@@ -99,7 +100,7 @@ public class GamesFragment extends Fragment {
     }
 
     private void getChampions(final RecentGamesVo recentGamesVo) {
-        mStaticLeagueApi.getChampions("na", getString(R.string.api_key), true, "all", new Callback<ChampionsVo>() {
+        mStaticLeagueApi.getChampions(CoreConstants.REGION_NA, getString(R.string.api_key), true, CoreConstants.CHAMP_DATA_ALL, new Callback<ChampionsVo>() {
             @Override
             public void success(ChampionsVo championsVo, Response response) {
                 getSummonerSpells(recentGamesVo, championsVo);
@@ -114,7 +115,7 @@ public class GamesFragment extends Fragment {
     }
 
     private void getSummonerSpells(final RecentGamesVo recentGamesVo, final ChampionsVo championsVo) {
-        mStaticLeagueApi.getSummonerSpells("na", true, "all", getString(R.string.api_key), new Callback<SummonerSpellsVo>() {
+        mStaticLeagueApi.getSummonerSpells(CoreConstants.REGION_NA, true, CoreConstants.CHAMP_DATA_ALL, getString(R.string.api_key), new Callback<SummonerSpellsVo>() {
             @Override
             public void success(SummonerSpellsVo summonerSpellsVo, Response response) {
                 initializeAdapter(recentGamesVo, championsVo, summonerSpellsVo);
@@ -128,7 +129,6 @@ public class GamesFragment extends Fragment {
     }
 
     private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo, SummonerSpellsVo summonerSpellsVo) {
-        Log.d("Loop:", "intialize adapter");
         mAdapter = new RecentGamesAdapter(getActivity(), recentGamesVo.getGames(), championsVo, summonerSpellsVo);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getActivity());

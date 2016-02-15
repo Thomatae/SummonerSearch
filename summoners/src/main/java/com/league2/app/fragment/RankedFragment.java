@@ -66,6 +66,7 @@ public class RankedFragment extends Fragment {
     }
 
     private void getLeagueInformation() {
+
         mLeagueApi.getSummonerLeagueStats("na", mUserId, getString(R.string.api_key), new Callback<MasterLeagueVo>() {
             @Override
             public void success(MasterLeagueVo masterLeagueVo, Response response) {
@@ -86,6 +87,7 @@ public class RankedFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mProgressLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
