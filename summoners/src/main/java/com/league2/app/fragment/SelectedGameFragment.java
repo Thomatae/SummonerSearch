@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
 
 /**
@@ -46,6 +45,12 @@ public class SelectedGameFragment extends Fragment {
         mGameText = (TextView) view.findViewById(R.id.gameId);
         mGameText.setText("Game Id:" + mGameId);
 
+        getGameData();
+
         return view;
+    }
+
+    private void getGameData() {
+
     }
 }

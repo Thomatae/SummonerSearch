@@ -1,6 +1,7 @@
 package com.league2.app.Service;
 
 import com.league2.app.Vo.MasterLeagueVo;
+import com.league2.app.Vo.MatchDetailVo;
 import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerInfoVo;
@@ -28,5 +29,5 @@ public interface LeagueApi {
 
     //TODO create the CALL BACK
     @GET("/{region}/v2.2/match/{matchId}")
-    void getGame(@Path("region") String region, @Query("api_key") String apiKey);
+    void getGame(@Path("region") String region, @Query("api_key") String apiKey, Callback<MatchDetailVo> callback);
 }

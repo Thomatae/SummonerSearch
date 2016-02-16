@@ -1,34 +1,22 @@
 package com.league2.app.adapter;
 
-import org.w3c.dom.Text;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.TimeUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.league2.app.Module.ChampionsVo;
-import com.league2.app.Module.DaggerApplication;
 import com.league2.app.R;
-import com.league2.app.Service.LeagueApi;
-import com.league2.app.Service.StaticLeagueApi;
-import com.league2.app.Vo.Champion;
 import com.league2.app.Vo.GameStatsVo;
 import com.league2.app.Vo.GameVo;
 import com.league2.app.Vo.SummonerSpellsVo;
 import com.squareup.picasso.Picasso;
 
-import javax.inject.Inject;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by trethoma1 on 11/5/15.
