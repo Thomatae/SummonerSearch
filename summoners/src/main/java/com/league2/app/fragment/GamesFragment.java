@@ -26,7 +26,9 @@ import com.league2.app.Vo.GameVo;
 import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerSpellsVo;
 import com.league2.app.adapter.RecentGamesAdapter;
+import com.league2.app.event.SelectedGameEvent;
 import com.league2.app.util.CoreConstants;
+import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ import java.util.List;
 
     Idea: Have a filter for Ranked and Normal
  */
-public class GamesFragment extends Fragment {
+public class GamesFragment extends Fragment implements RecentGamesAdapter.GameClickedListener {
 
     private static final String TITLE = "Games";
 
@@ -54,16 +56,35 @@ public class GamesFragment extends Fragment {
     private LinearLayout mProgressLayout;
 
     private long mUserId = NO_USER_ID;
+    private RecentGamesVo mRecentGames;
 
     @Inject LeagueApi mLeagueApi;
 
     @Inject StaticLeagueApi mStaticLeagueApi;
+
+    @Inject Bus mBus;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         DaggerApplication.inject(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBus != null) {
+            mBus.register(this);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mBus != null) {
+            mBus.unregister(this);
+        }
     }
 
     @Nullable
@@ -89,6 +110,7 @@ public class GamesFragment extends Fragment {
             public void success(RecentGamesVo recentGamesVo, Response response) {
                 //After getting games, will need to grab champion info
                 //possibly also spell info for icons
+                mRecentGames = recentGamesVo;
                 getChampions(recentGamesVo);
             }
 
@@ -129,14 +151,20 @@ public class GamesFragment extends Fragment {
     }
 
     private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo, SummonerSpellsVo summonerSpellsVo) {
-        mAdapter = new RecentGamesAdapter(getActivity(), recentGamesVo.getGames(), championsVo, summonerSpellsVo);
+        mAdapter = new RecentGamesAdapter(getActivity(), this, recentGamesVo.getGames(), championsVo, summonerSpellsVo);
         mRecyclerView.setAdapter(mAdapter);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mProgressLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     public static String getTitle() {
         return TITLE;
+    }
+
+    @Override
+    public void onGameClicked(int position) {
+        mBus.post(new SelectedGameEvent(mRecentGames.getGames().get(position).gameId));
     }
 }

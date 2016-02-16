@@ -40,23 +40,24 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
     private SimpleDateFormat mDateFormatter;
     private ChampionsVo mChampions;
     private SummonerSpellsVo mSummonerSpellsVo;
+    private GameClickedListener mListener;
 
-    @Inject
-    StaticLeagueApi mStaticLeagueApi;
-
-    //TODO will need to have List<ChampionNames>
-    public RecentGamesAdapter(Context context, List<GameVo> gameVos, ChampionsVo champions, SummonerSpellsVo summonerSpellsVo) {
+    public RecentGamesAdapter(Context context, GameClickedListener listener,
+                              List<GameVo> gameVos,
+                              ChampionsVo champions,
+                              SummonerSpellsVo summonerSpellsVo) {
         mContext = context;
         mGameVos = gameVos;
         mChampions = champions;
         mSummonerSpellsVo = summonerSpellsVo;
+        mListener = listener;
         mDateFormatter = new SimpleDateFormat("yyyy/MM/dd");
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.row_recent_games, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -94,7 +95,11 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
         return mGameVos.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public interface GameClickedListener {
+        void onGameClicked(int position);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView subType;
         TextView gameMode;
@@ -107,8 +112,12 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
         TextView creepScore;
         TextView goldEarned;
 
-        public ViewHolder(View itemView) {
+        GameClickedListener listener;
+
+        public ViewHolder(View itemView, GameClickedListener listener) {
             super(itemView);
+
+            this.listener = listener;
 
             subType = (TextView) itemView.findViewById(R.id.subType);
             gameMode = (TextView) itemView.findViewById(R.id.gameMode);
@@ -120,7 +129,16 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
             killDeathAssist = (TextView) itemView.findViewById(R.id.kill_death_assist);
             creepScore = (TextView) itemView.findViewById(R.id.creep_score);
             goldEarned = (TextView) itemView.findViewById(R.id.gold_earned);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (listener != null) {
+                listener.onGameClicked(getAdapterPosition());
+            }
+         }
     }
 
     private int getColor(int resourceId) {

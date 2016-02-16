@@ -24,7 +24,9 @@ import com.league2.app.Module.DaggerApplication;
 import com.league2.app.adapter.DrawerAdapter;
 import com.league2.app.adapter.ViewPagerAdapter;
 import com.league2.app.event.ProfileUpdatedEvent;
+import com.league2.app.event.SelectedGameEvent;
 import com.league2.app.event.UserIdEvent;
+import com.league2.app.fragment.SelectedGameFragment;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.R;
 import com.league2.app.fragment.SettingsFragment;
@@ -229,6 +231,15 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
         }
     }
 
+    private void startSelectGameFragment(long gameId) {
+        mContainer.setVisibility(View.VISIBLE);
+        mTabLayout.setVisibility(View.GONE);
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        Fragment fragment = SelectedGameFragment.newInstance(gameId);
+        replaceFragment(fragment);
+    }
+
     private void startPreferenceFragment() {
         mContainer.setVisibility(View.VISIBLE);
         mTabLayout.setVisibility(View.GONE);
@@ -266,5 +277,10 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     @Override
     public void startChampionSearch() {
         Toast.makeText(this, "Champion", Toast.LENGTH_SHORT).show();
+    }
+
+    @Subscribe
+    public void onSelectedGameEvent(SelectedGameEvent event) {
+        startSelectGameFragment(event.mGameId);
     }
 }
