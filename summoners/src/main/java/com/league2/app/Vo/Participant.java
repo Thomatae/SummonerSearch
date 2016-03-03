@@ -15,7 +15,7 @@ public class Participant {
     //runes
     public int spell1Id;
     public int spell2Id;
-    //stats Participant Stats
+    public ParticipantStatsVo stats;
     public int teamId;
     //timeline
 }

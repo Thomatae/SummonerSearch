@@ -29,5 +29,5 @@ public interface LeagueApi {
 
     //TODO create the CALL BACK
     @GET("/{region}/v2.2/match/{matchId}")
-    void getGame(@Path("region") String region, @Query("api_key") String apiKey, Callback<MatchDetailVo> callback);
+    void getGame(@Path("region") String region, @Query("api_key") String apiKey, @Path("matchId") long matchId, Callback<MatchDetailVo> callback);
 }

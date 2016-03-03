@@ -7,6 +7,7 @@ import com.league2.app.activity.MainActivity;
 import com.league2.app.adapter.RecentGamesAdapter;
 import com.league2.app.fragment.GamesFragment;
 import com.league2.app.fragment.RankedFragment;
+import com.league2.app.fragment.SelectedGameFragment;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.fragment.SettingsFragment;
@@ -24,7 +25,8 @@ import retrofit.RestAdapter;
                    RankedFragment.class,
                    SettingsFragment.class,
                    GamesFragment.class,
-                   RecentGamesAdapter.class},
+                   RecentGamesAdapter.class,
+                   SelectedGameFragment.class},
         library = true, complete = false)
 public class LeagueModule {
     private final DaggerApplication application;

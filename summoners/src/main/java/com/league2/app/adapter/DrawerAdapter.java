@@ -66,7 +66,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if(viewHolder.HolderId == 1) {
+        if(viewHolder.HolderId == TYPE_ITEM) {
             viewHolder.itemTitle.setText(mItemTitles[position - 1]);
             viewHolder.itemIcon.setImageResource(mItemIconIds[position -1]);
         }

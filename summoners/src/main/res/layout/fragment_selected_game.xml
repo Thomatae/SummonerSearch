@@ -4,8 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gameId"/>
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/loading_text"
+            android:text="@string/loading_ranked"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#c9c9c9"
+        android:id="@+id/game_details"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/gameType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/game_length"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gameType"
+            android:textSize="16sp"
+            android:layout_alignLeft="@+id/gameType"/>
+
+        <TextView
+            android:id="@+id/game_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textSize="16sp"
+            android:layout_below="@+id/gameType"
+            android:layout_toRightOf="@+id/game_length"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/summonerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#ffffff"/>
 
 </LinearLayout>
