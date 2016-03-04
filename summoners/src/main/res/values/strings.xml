@@ -27,9 +27,9 @@
     <string name="empty_ranked"> There seems to be no ranked \n activity for this user.</string>
 
     <!--Ranked Strings-->
-    <string name="league_points">LP:</string>
-    <string name="wins">W:</string>
-    <string name="losses">L:</string>
+    <string name="league_points">League Points:</string>
+    <string name="wins">Wins:</string>
+    <string name="losses">Losses:</string>
     <string name="hot_streak">Hot Streak</string>
     <string name="veteran">Veteran</string>
     <string name="inactive">Inactive</string>
@@ -38,6 +38,13 @@
 
     <!-- Game Strings-->
     <string name="kills_death_assist">%1$d/%2$d/%3$d</string>
+    <string name="victory">Victory</string>
+    <string name="defeat">Defeat</string>
+    <string name="barons">Barons:</string>
+    <string name="dragons">Dragons:</string>
+    <string name="towers">Towers:</string>
+    <string name="rift_heralds">Rift Heralds:</string>
+
 
     <!--Settings Fragment-->
     <string name="clear_user_title">Clear User Profile</string>
@@ -45,7 +52,6 @@
 
     <!--Old Strings-->
     <string name="app_name">Summoner Search</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_summoner_info_pager">SummonerInfoPagerActivity</string>
     <string name="title_activity_info_pager">InfoPagerActivity</string>
