@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     private FrameLayout mContainer;
     private ViewPagerAdapter mViewPagerAdapter;
     private SharedPreferences mSharedPreferences;
+    private SearchView mSearchView;
 
     private String mUserName;
     private long mUserId;
@@ -204,6 +207,23 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        mSearchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        };
+
+        mSearchView.setQueryHint(getString(R.string.summoner_search));
+        mSearchView.setOnQueryTextListener(queryTextListener);
+
         return true;
     }
 

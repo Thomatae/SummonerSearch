@@ -26,6 +26,9 @@
     <string name="ranked">Ranked</string>
     <string name="empty_ranked"> There seems to be no ranked \n activity for this user.</string>
 
+    <!-- Search Strings-->
+    <string name="summoner_search">Summoner Search</string>
+
     <!--Ranked Strings-->
     <string name="league_points">League Points:</string>
     <string name="wins">Wins:</string>

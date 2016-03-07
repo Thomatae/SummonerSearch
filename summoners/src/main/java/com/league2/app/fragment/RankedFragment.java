@@ -31,6 +31,7 @@ public class RankedFragment extends Fragment {
 
     public static final String TITLE = "Ranked";
     private static final long NO_USER_ID = 0;
+    private static final String USER_ID = "userId.rankedFragment";
 
     private TextView mEmpty;
     private RecyclerView mRecyclerView;
@@ -42,19 +43,25 @@ public class RankedFragment extends Fragment {
 
     @Inject LeagueApi mLeagueApi;
 
+    public static RankedFragment newInstance(long userId) {
+        Bundle args = new Bundle();
+        args.putLong(USER_ID, userId);
+        RankedFragment fragment = new RankedFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         DaggerApplication.inject(this);
+        mUserId = getArguments().getLong(USER_ID);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ranked, null);
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
-        mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
 
         mEmpty = (TextView) view.findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ranked_recycler);

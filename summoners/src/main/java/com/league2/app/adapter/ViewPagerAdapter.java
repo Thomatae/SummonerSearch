@@ -30,8 +30,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public void setUpAdapter(long userId) {
         if (userId != 0) {
-            addFrag(new RankedFragment(), RankedFragment.getTitle());
-            addFrag(new GamesFragment(), GamesFragment.getTitle());
+            addFrag(RankedFragment.newInstance(userId), RankedFragment.getTitle());
+            addFrag(GamesFragment.newInstance(userId), GamesFragment.getTitle());
         }
     }
 

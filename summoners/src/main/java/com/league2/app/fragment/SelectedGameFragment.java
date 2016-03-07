@@ -20,7 +20,6 @@ import com.league2.app.R;
 import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.StaticLeagueApi;
 import com.league2.app.Vo.MatchDetailVo;
-import com.league2.app.Vo.RecentGamesVo;
 import com.league2.app.Vo.SummonerSpellsVo;
 import com.league2.app.adapter.SelectedGameAdapter;
 import com.league2.app.util.CoreConstants;

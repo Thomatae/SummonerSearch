@@ -46,6 +46,7 @@ import java.util.List;
 public class GamesFragment extends Fragment implements RecentGamesAdapter.GameClickedListener {
 
     private static final String TITLE = "Games";
+    private static final String USER_ID = "userId.gamesFragment";
 
     private static final long NO_USER_ID = 0;
 
@@ -64,11 +65,20 @@ public class GamesFragment extends Fragment implements RecentGamesAdapter.GameCl
 
     @Inject Bus mBus;
 
+    public static GamesFragment newInstance(long userId) {
+        Bundle args = new Bundle();
+        args.putLong(USER_ID, userId);
+        GamesFragment fragment = new GamesFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         DaggerApplication.inject(this);
+        mUserId = getArguments().getLong(USER_ID);
     }
 
     @Override
@@ -91,9 +101,6 @@ public class GamesFragment extends Fragment implements RecentGamesAdapter.GameCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_games, null);
-
-        SharedPreferences preferences = getActivity().getSharedPreferences(getString(R.string.shared_preference_file), Context.MODE_PRIVATE);
-        mUserId = preferences.getLong(getString(R.string.user_id), NO_USER_ID);
 
         mEmpty = (TextView) view.findViewById(R.id.empty_view);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.ranked_recycler);
