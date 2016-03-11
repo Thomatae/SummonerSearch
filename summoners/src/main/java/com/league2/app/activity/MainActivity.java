@@ -4,10 +4,9 @@ import android.content.Context;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.adapter.DrawerAdapter;
-import com.league2.app.adapter.ViewPagerAdapter;
 import com.league2.app.event.ProfileUpdatedEvent;
 import com.league2.app.event.SelectedGameEvent;
 import com.league2.app.event.UserIdEvent;
@@ -49,10 +46,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ViewPager mViewPager;
-    private TabLayout mTabLayout;
     private FrameLayout mContainer;
-    private ViewPagerAdapter mViewPagerAdapter;
     private SharedPreferences mSharedPreferences;
     private SearchView mSearchView;
 
@@ -72,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
 
         DaggerApplication.inject(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mTabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
         mContainer = (FrameLayout) findViewById(R.id.fragment_container);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -84,13 +76,12 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
             mProfileIconId = mSharedPreferences.getInt(getString(R.string.user_profile_icon_id), 0);
-            mContainer.setVisibility(View.GONE);
-            initializeViewPager();
+            initializeHomeViewPager();
         } else {
             mUserName = getString(R.string.default_user_name);
             mUserId = 0;
             mProfileIconId = 0;
-            initializeHomepageFragment();
+            initializeSetupFragment();
         }
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
@@ -135,22 +126,6 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
         mDrawerToggle.syncState();
     }
 
-    private void initializeViewPager() {
-        initializeViewPagerAdapter();
-        mTabLayout.setVisibility(View.VISIBLE);
-        mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    private void initializeViewPagerAdapter() {
-        //TODO Async Tasks here or inside Fragments themselves?
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.clearAdapter();
-        Log.d("UserId main: ", mUserId + "");
-        mViewPagerAdapter.setUpAdapter(mUserId);
-        mViewPager.removeAllViews();
-        mViewPager.setAdapter(mViewPagerAdapter);
-    }
-
     /**
      * This handles the user setting the profile name
      * Also should initiate ViewPager and Tabs
@@ -162,9 +137,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
             clearProfile();
             updateMenuAdapter();
         } else {
-            mContainer.setVisibility(View.GONE);
             updateMenuAdapter();
-            initializeViewPager();
+            startHome();
         }
     }
 
@@ -241,40 +215,56 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     }
 
     private void backArrowClicked() {
+        int stackCount = getSupportFragmentManager().getBackStackEntryCount();
         if (mClearedData || mUserId == 0) {
             replaceFragment(new SetUpFragment());
             mDrawerToggle.setDrawerIndicatorEnabled(true);
             mClearedData = false;
-        } else if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            mDrawerToggle.setDrawerIndicatorEnabled(true);
-            mContainer.setVisibility(View.GONE);
-            mTabLayout.setVisibility(View.VISIBLE);
+        } else if (stackCount > 1) {
+            if (stackCount == 2) {
+                mDrawerToggle.setDrawerIndicatorEnabled(true);
+            }
+            super.onBackPressed();
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            finish();
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            mDrawerToggle.setDrawerIndicatorEnabled(true);
+        }
+
+        super.onBackPressed();
+    }
+
     private void startSelectGameFragment(long gameId) {
-        mContainer.setVisibility(View.VISIBLE);
-        mTabLayout.setVisibility(View.GONE);
         mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         Fragment fragment = SelectedGameFragment.newInstance(gameId);
-        replaceFragment(fragment);
+        addFragment(fragment);
     }
 
     private void startPreferenceFragment() {
-        mContainer.setVisibility(View.VISIBLE);
-        mTabLayout.setVisibility(View.GONE);
         mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 
-        replaceFragment(new SettingsFragment());
+        addFragment(new SettingsFragment());
     }
 
-    private void initializeHomepageFragment() {
-        //TODO hide view pager stuff
-        mTabLayout.setVisibility(View.GONE);
-        mContainer.setVisibility(View.VISIBLE);
+    private void initializeSetupFragment() {
         addFragment(new SetUpFragment());
+    }
+
+    private void initializeHomeViewPager() {
+        addFragment(ViewPagerFragment.newInstance(mUserId));
+    }
+
+    private void startSearchHome(long userId) {
+        replaceFragment(ViewPagerFragment.newInstance(mUserId));
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -282,22 +272,21 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     }
 
     private void addFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().addToBackStack(null).add(R.id.fragment_container, fragment).commit();
     }
 
     @Override
     public void startHome() {
-        Toast.makeText(this, "HOME", Toast.LENGTH_SHORT).show();
-        mTabLayout.setVisibility(View.GONE);
-        mContainer.setVisibility(View.VISIBLE);
-        mDrawerToggle.setDrawerIndicatorEnabled(false);
-        mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        replaceFragment(ViewPagerFragment.newInstance(mUserId));
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        //TODO fix this probably
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        addFragment(ViewPagerFragment.newInstance(mUserId));
     }
 
     @Override
     public void startSummonerSearch() {
-        Toast.makeText(this, "Summoner", Toast.LENGTH_SHORT).show();
+        //TODO actually call startSearchHome but with no ID
+        startSearchHome(0);
     }
 
     @Override

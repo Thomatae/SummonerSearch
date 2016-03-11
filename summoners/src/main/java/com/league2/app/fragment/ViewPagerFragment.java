@@ -48,6 +48,19 @@ public class ViewPagerFragment extends Fragment {
         mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
         mTabLayout = (TabLayout) view.findViewById(R.id.tabanim_tabs);
 
+        if (mUserId != 0) {
+            initializeViewpager();
+        } else {
+            //TODO show empty view with set text for begin search above
+        }
+
+        //TODO handle if the search doesnt work
+
+
+        return view;
+    }
+
+    private void initializeViewpager() {
         mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
         mViewPagerAdapter.clearAdapter();
         Log.d("UserId main: ", mUserId + "");
@@ -56,8 +69,5 @@ public class ViewPagerFragment extends Fragment {
         mViewPager.setAdapter(mViewPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
-
-
-        return view;
     }
 }
