@@ -32,6 +32,7 @@ import com.league2.app.fragment.SelectedGameFragment;
 import com.league2.app.fragment.SetUpFragment;
 import com.league2.app.R;
 import com.league2.app.fragment.SettingsFragment;
+import com.league2.app.fragment.ViewPagerFragment;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
@@ -287,6 +288,11 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     @Override
     public void startHome() {
         Toast.makeText(this, "HOME", Toast.LENGTH_SHORT).show();
+        mTabLayout.setVisibility(View.GONE);
+        mContainer.setVisibility(View.VISIBLE);
+        mDrawerToggle.setDrawerIndicatorEnabled(false);
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        replaceFragment(ViewPagerFragment.newInstance(mUserId));
     }
 
     @Override
