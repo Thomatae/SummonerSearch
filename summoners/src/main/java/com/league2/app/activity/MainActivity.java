@@ -1,5 +1,8 @@
 package com.league2.app.activity;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import android.content.Context;
 
 import android.content.SharedPreferences;
@@ -21,6 +24,8 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
+import com.league2.app.Service.LeagueApi;
+import com.league2.app.Vo.SummonerInfoVo;
 import com.league2.app.adapter.DrawerAdapter;
 import com.league2.app.event.ProfileUpdatedEvent;
 import com.league2.app.event.SelectedGameEvent;
@@ -59,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
 
     @Inject Bus mBus;
 
+    @Inject LeagueApi mLeagueApi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
             mUserName = mSharedPreferences.getString(getString(R.string.user_name), getString(R.string.default_user_name));
             mUserId = mSharedPreferences.getLong(getString(R.string.user_id), 0);
             mProfileIconId = mSharedPreferences.getInt(getString(R.string.user_profile_icon_id), 0);
+            getSupportActionBar().setTitle(mUserName);
             initializeHomeViewPager();
         } else {
             mUserName = getString(R.string.default_user_name);
@@ -187,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
         SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                getSummonerId(query);
                 return false;
             }
 
@@ -264,7 +273,9 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     }
 
     private void startSearchHome(long userId) {
-        replaceFragment(ViewPagerFragment.newInstance(mUserId));
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        addFragment(ViewPagerFragment.newInstance(userId));
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -278,15 +289,15 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     @Override
     public void startHome() {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        //TODO fix this probably
         mDrawerToggle.setDrawerIndicatorEnabled(true);
+        getSupportActionBar().setTitle(mUserName);
         addFragment(ViewPagerFragment.newInstance(mUserId));
     }
 
     @Override
     public void startSummonerSearch() {
         //TODO actually call startSearchHome but with no ID
-        startSearchHome(0);
+
     }
 
     @Override
@@ -297,5 +308,20 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
     @Subscribe
     public void onSelectedGameEvent(SelectedGameEvent event) {
         startSelectGameFragment(event.mGameId);
+    }
+
+    private void getSummonerId(String summonerName) {
+        mLeagueApi.getSummonerStats("na", summonerName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
+            @Override
+            public void success(SummonerInfoVo summonerInfoVo, Response response) {
+                getSupportActionBar().setTitle(summonerInfoVo.getResults().name);
+                startSearchHome(summonerInfoVo.getResults().getSummonerId());
+            }
+
+            @Override
+            public void failure(RetrofitError retrofitError) {
+                Toast.makeText(getApplicationContext(), "Sorry there was a problem with your search", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
