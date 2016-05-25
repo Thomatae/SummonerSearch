@@ -71,7 +71,7 @@ public class RecentGamesAdapter extends RecyclerView.Adapter<RecentGamesAdapter.
                .into(holder.summonerSpellTwo);
 
         holder.gameDate.setText(mDateFormatter.format(new Date(gameVo.createDate)));
-        holder.gameLength.setText("Game Length: " + Integer.toString(stats.timePlayed / 60));
+        holder.gameLength.setText("Game Length: " + Integer.toString(stats.timePlayed / 60) + "Minutes");
 
         holder.killDeathAssist.setText(String.format(mContext.getString(R.string.kills_death_assist), stats.championsKilled, stats.numDeaths, stats.assists));
         holder.creepScore.setText(Integer.toString(stats.minionsKilled));

@@ -13,12 +13,17 @@ import com.league2.app.Vo.MatchDetailVo;
 import com.league2.app.Vo.Participant;
 import com.league2.app.Vo.ParticipantStatsVo;
 import com.league2.app.Vo.PlayerVo;
+import com.league2.app.Vo.SummonerIDVo;
 import com.league2.app.Vo.SummonerSpellsVo;
+import com.league2.app.Vo.SummonerVo;
 import com.league2.app.Vo.TeamVo;
+import com.league2.app.event.SummonerSelectedEvent;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by trethoma1 on 2/16/16.
@@ -33,34 +38,30 @@ public class SelectedGameAdapter extends RecyclerView.Adapter<SelectedGameAdapte
     private ChampionsVo mChampions;
     private SummonerSpellsVo mSummonerSpellsVo;
     private SimpleDateFormat mDateFormatter;
+    private SummonerClickedListener mListener;
 
-    public interface OnClickListener {
-        void onClick(View view, int position);
-    }
-
-    public SelectedGameAdapter(Context context, MatchDetailVo match, ChampionsVo champions, SummonerSpellsVo summonerSpellsVo) {
+    public SelectedGameAdapter(Context context, MatchDetailVo match, ChampionsVo champions, SummonerSpellsVo summonerSpellsVo, SummonerClickedListener listener) {
         mContext = context;
         mMatchDetailVo = match;
         mChampions = champions;
         mSummonerSpellsVo = summonerSpellsVo;
         mDateFormatter = new SimpleDateFormat("yyy/MM/dd");
+        mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //View view = LayoutInflater.from(mContext).inflate(R.layout.row_)
         if (viewType == TYPE_ITEM) {
             //view item
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_game_item, parent, false);
-            return new ViewHolder(view, viewType);
+            return new ViewHolder(view, viewType, mListener);
         } else if (viewType == TYPE_HEADER) {
             //view header
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_game_header, parent, false);
 
-            return new ViewHolder(view, viewType);
+            return new ViewHolder(view, viewType, mListener);
         }
 
-        //TODO return new ViewHolder(v, viewtype);
         return null;
     }
 
@@ -90,28 +91,30 @@ public class SelectedGameAdapter extends RecyclerView.Adapter<SelectedGameAdapte
             PlayerVo playerVo = mMatchDetailVo.participantIdentities.get(position).player;
             Participant participant = mMatchDetailVo.participants.get(position);
             ParticipantStatsVo stats = participant.stats;
-            if (playerVo != null) {
-                holder.playerName.setText(playerVo.summonerName);
-            } else {
-                holder.playerName.setText("Player " + participant.participantId);
-                String championId = Integer.toString(participant.championId);
-                Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/champion/" + mChampions.data.get(championId).image.full)
-                       .placeholder(R.drawable.ic_launcher)
-                       .into(holder.championIcon);
 
+            holder.playerName.setText(participant.summonerName);
 
-                Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(participant.spell1Id)).image.full)
-                       .into(holder.summonerSpellOne);
+            String championId = Integer.toString(participant.championId);
+            Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/champion/" + mChampions.data.get(championId).image.full)
+                   .placeholder(R.drawable.ic_launcher)
+                   .into(holder.championIcon);
 
-                Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(participant.spell2Id)).image.full)
-                       .into(holder.summonerSpellTwo);
+            Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(participant.spell1Id)).image.full)
+                   .into(holder.summonerSpellOne);
 
-                holder.killDeathAssist.setText(String.format(mContext.getString(R.string.kills_death_assist), stats.kills, stats.deaths, stats.assists));
-                holder.creepScore.setText(Integer.toString(stats.minionsKilled));
-                holder.goldEarned.setText(Long.toString(stats.goldEarned) + "K");
-            }
+            Picasso.with(mContext).load("http://ddragon.leagueoflegends.com/cdn/6.3.1/img/spell/" + mSummonerSpellsVo.data.get(Integer.toString(participant.spell2Id)).image.full)
+                   .into(holder.summonerSpellTwo);
+
+            holder.killDeathAssist.setText(String.format(mContext.getString(R.string.kills_death_assist), stats.kills, stats.deaths, stats.assists));
+            holder.creepScore.setText(Integer.toString(stats.minionsKilled));
+            holder.goldEarned.setText(Long.toString(stats.goldEarned) + "K");
         }
     }
+
+    public interface SummonerClickedListener {
+        void onSummonerClicked(int position);
+    }
+
 
     @Override
     public int getItemCount() {
@@ -138,9 +141,13 @@ public class SelectedGameAdapter extends RecyclerView.Adapter<SelectedGameAdapte
         TextView creepScore;
         TextView goldEarned;
 
-        public ViewHolder(View itemView, int viewType) {
+        SummonerClickedListener listener;
+
+        public ViewHolder(View itemView, int viewType, SummonerClickedListener listener) {
             super(itemView);
             itemView.setOnClickListener(this);
+            this.listener = listener;
+
 
             if(viewType == TYPE_HEADER) {
                 victoryDefeat = (TextView) itemView.findViewById(R.id.victoryDefeat);
@@ -165,6 +172,9 @@ public class SelectedGameAdapter extends RecyclerView.Adapter<SelectedGameAdapte
         @Override
         public void onClick(View v) {
             //TODO stuff, like show more data
+            if (listener != null) {
+                listener.onSummonerClicked(getAdapterPosition() - 1);
+            }
         }
     }
 

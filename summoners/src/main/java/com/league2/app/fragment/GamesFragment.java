@@ -23,7 +23,10 @@ import com.league2.app.Service.LeagueApi;
 import com.league2.app.Service.StaticLeagueApi;
 import com.league2.app.Vo.Champion;
 import com.league2.app.Vo.GameVo;
+import com.league2.app.Vo.PlayerVo;
 import com.league2.app.Vo.RecentGamesVo;
+import com.league2.app.Vo.SummonerIDVo;
+import com.league2.app.Vo.SummonerInfoVo;
 import com.league2.app.Vo.SummonerSpellsVo;
 import com.league2.app.adapter.RecentGamesAdapter;
 import com.league2.app.event.SelectedGameEvent;
@@ -117,6 +120,7 @@ public class GamesFragment extends Fragment implements RecentGamesAdapter.GameCl
             public void success(RecentGamesVo recentGamesVo, Response response) {
                 //After getting games, will need to grab champion info
                 //possibly also spell info for icons
+                Log.d("GamesURL:", " " + response.getUrl());
                 mRecentGames = recentGamesVo;
                 getChampions(recentGamesVo);
             }
@@ -144,17 +148,21 @@ public class GamesFragment extends Fragment implements RecentGamesAdapter.GameCl
     }
 
     private void getSummonerSpells(final RecentGamesVo recentGamesVo, final ChampionsVo championsVo) {
-        mStaticLeagueApi.getSummonerSpells(CoreConstants.REGION_NA, true, CoreConstants.CHAMP_DATA_ALL, getString(R.string.api_key), new Callback<SummonerSpellsVo>() {
-            @Override
-            public void success(SummonerSpellsVo summonerSpellsVo, Response response) {
-                initializeAdapter(recentGamesVo, championsVo, summonerSpellsVo);
-            }
+        mStaticLeagueApi.getSummonerSpells(CoreConstants.REGION_NA,
+                                           true,
+                                           CoreConstants.CHAMP_DATA_ALL,
+                                           getString(R.string.api_key),
+                                           new Callback<SummonerSpellsVo>() {
+                                               @Override
+                                               public void success(SummonerSpellsVo summonerSpellsVo, Response response) {
+                                                   initializeAdapter(recentGamesVo, championsVo, summonerSpellsVo);
+                                               }
 
-            @Override
-            public void failure(RetrofitError retrofitError) {
+                                               @Override
+                                               public void failure(RetrofitError retrofitError) {
 
-            }
-        });
+                                               }
+                                           });
     }
 
     private void initializeAdapter(RecentGamesVo recentGamesVo, ChampionsVo championsVo, SummonerSpellsVo summonerSpellsVo) {
@@ -172,6 +180,29 @@ public class GamesFragment extends Fragment implements RecentGamesAdapter.GameCl
 
     @Override
     public void onGameClicked(int position) {
-        mBus.post(new SelectedGameEvent(mRecentGames.getGames().get(position).gameId));
+        //TODO make fellowPlayers Parcable
+        List<PlayerVo> players = mRecentGames.games.get(position).fellowPlayers;
+
+        String ids = getPlayerIdsString(players);
+        players.add(createNewPlayer(position));
+        mBus.post(new SelectedGameEvent(mRecentGames.getGames().get(position).gameId, ids, players));
+    }
+
+    private PlayerVo createNewPlayer(int position) {
+        GameVo game = mRecentGames.getGames().get(position);
+        PlayerVo playerVo = new PlayerVo();
+        playerVo.summonerId = mRecentGames.summonerId;
+        playerVo.championId = game.championId;
+        return playerVo;
+    }
+
+    private String getPlayerIdsString(List<PlayerVo> fellowPlayers) {
+        String ids = "";
+        for (PlayerVo player : fellowPlayers) {
+            ids = ids + player.summonerId + ",";
+        }
+
+        ids = ids + mUserId;
+        return ids;
     }
 }

@@ -25,10 +25,12 @@ import android.widget.Toast;
 
 import com.league2.app.Module.DaggerApplication;
 import com.league2.app.Service.LeagueApi;
+import com.league2.app.Vo.PlayerVo;
 import com.league2.app.Vo.SummonerInfoVo;
 import com.league2.app.adapter.DrawerAdapter;
 import com.league2.app.event.ProfileUpdatedEvent;
 import com.league2.app.event.SelectedGameEvent;
+import com.league2.app.event.SummonerSelectedEvent;
 import com.league2.app.event.UserIdEvent;
 import com.league2.app.fragment.SelectedGameFragment;
 import com.league2.app.fragment.SetUpFragment;
@@ -40,6 +42,8 @@ import com.squareup.otto.Produce;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements DrawerAdapter.NavigationListener {
 
@@ -250,10 +254,10 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
         super.onBackPressed();
     }
 
-    private void startSelectGameFragment(long gameId) {
+    private void startSelectGameFragment(long gameId, String summonderIds, ArrayList<PlayerVo> playerInfo) {
         mDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerToggle.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-        Fragment fragment = SelectedGameFragment.newInstance(gameId);
+        Fragment fragment = SelectedGameFragment.newInstance(gameId, summonderIds, playerInfo);
         addFragment(fragment);
     }
 
@@ -272,10 +276,11 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
         addFragment(ViewPagerFragment.newInstance(mUserId));
     }
 
-    private void startSearchHome(long userId) {
+    private void startHomeForSummoner(long summonerId, String summonerName) {
         getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
-        addFragment(ViewPagerFragment.newInstance(userId));
+        getSupportActionBar().setTitle(summonerName);
+        addFragment(ViewPagerFragment.newInstance(summonerId));
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -288,10 +293,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
 
     @Override
     public void startHome() {
-        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        getSupportActionBar().setTitle(mUserName);
-        addFragment(ViewPagerFragment.newInstance(mUserId));
+        startHomeForSummoner(mUserId, mUserName);
     }
 
     @Override
@@ -307,15 +309,19 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.Nav
 
     @Subscribe
     public void onSelectedGameEvent(SelectedGameEvent event) {
-        startSelectGameFragment(event.mGameId);
+        startSelectGameFragment(event.mGameId, event.mFellowPlayerIds, new ArrayList<PlayerVo>(event.mPlayerInfo));
+    }
+
+    @Subscribe
+    public void onSelectedSummonerEvent(SummonerSelectedEvent event) {
+        startHomeForSummoner(event.summonerId, event.summonerName);
     }
 
     private void getSummonerId(String summonerName) {
         mLeagueApi.getSummonerStats("na", summonerName, getString(R.string.api_key), new Callback<SummonerInfoVo>() {
             @Override
             public void success(SummonerInfoVo summonerInfoVo, Response response) {
-                getSupportActionBar().setTitle(summonerInfoVo.getResults().name);
-                startSearchHome(summonerInfoVo.getResults().getSummonerId());
+                startHomeForSummoner(summonerInfoVo.getResults().getSummonerId(), summonerInfoVo.getResults().name);
             }
 
             @Override

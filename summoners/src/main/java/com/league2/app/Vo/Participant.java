@@ -15,6 +15,8 @@ public class Participant {
     //runes
     public int spell1Id;
     public int spell2Id;
+    public long summonerId;
+    public String summonerName;
     public ParticipantStatsVo stats;
     public int teamId;
     //timeline

@@ -3,6 +3,7 @@ package com.league2.app.Service;
 import com.league2.app.Vo.MasterLeagueVo;
 import com.league2.app.Vo.MatchDetailVo;
 import com.league2.app.Vo.RecentGamesVo;
+import com.league2.app.Vo.SummonerIDVo;
 import com.league2.app.Vo.SummonerIdLeagueVo;
 import com.league2.app.Vo.SummonerInfoVo;
 
@@ -19,6 +20,11 @@ public interface LeagueApi {
                           @Path("name") String name,
                           @Query("api_key") String apiKey,
                           Callback<SummonerInfoVo> callback);
+    @GET("/{region}/v1.4/summoner/{id}")
+    void getSummonersByID(@Path("region") String region,
+                          @Path("id") String ids,
+                          @Query("api_key") String apiKey,
+                          Callback<SummonerIDVo> callback);
 
     //TODO this now returns a list of SummonerIdLeagueVO
     @GET("/{region}/v2.5/league/by-summoner/{id}/entry")
