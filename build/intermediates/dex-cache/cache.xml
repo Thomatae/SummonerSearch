@@ -2,102 +2,175 @@
 <items version="2" >
 
     <item
-        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="6975da39a7040257bd51d21a231b76c915872d38">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/javax.inject-1-b8b6bb8e1c4421d5786fddf5d309f2309df4355a.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/gson-2.3-99a54b32029c2d265ff0530073f6e53ac75228b3.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger-compiler/1.1.0/ddb38c2be31deeb7a001177f7c358665e350d646/dagger-compiler-1.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="ddb38c2be31deeb7a001177f7c358665e350d646">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/dagger-compiler-1.1.0-527c4cb075f22c5b6847045bf6175c9d7188137a.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/javawriter-2.1.1-b7e12c8e7609f8c6e494865ed8656b7f7b62f127.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/design/22.2.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-d5ae5963446557d505bc8813f087c7f810041112.jar" />
-    </item>
-    <item
+        is-multidex="true"
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
-        jumboMode="false"
+        jumboMode="true"
+        optimize="false"
         revision="21.1.2"
         sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/picasso-2.5.2-dfdc242169ab25539f609b918713357d00a61270.jar" />
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_dfdc242169ab25539f609b918713357d00a61270/classes.dex" />
     </item>
     <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/libs/internal_impl-22.2.0.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-22.0.0_717622c26d8f9c997316164e6587178b22afef72/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/javawriter-2.1.1_b7e12c8e7609f8c6e494865ed8656b7f7b62f127/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="13e0166714b0bc67ab893ae72c34e833e49bded1">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_da57ea176e653207dfa13838309c3b04b8b82d3a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="true"
+        optimize="false"
         revision="21.1.2"
         sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-4e6ed9fb37ae54b41ca5d0c2e6465e407c2df217.jar" />
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-22.2.0_9a4c04c50bb70e832a6160a94ab0f898299a199d/classes.dex" />
     </item>
     <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="aeb5f124fb2c9d403077bdb850103b212f9d842c">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_95d2d845f42714cdd2559a1ba9e5bf693168589c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/design/22.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-22.2.0_9afbb695ed6320d4e1e78976646f71f223f04265/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-asl/1.9.13/1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7/jackson-mapper-asl-1.9.13.jar"
-        jumboMode="false"
+        jumboMode="true"
+        optimize="false"
         revision="21.1.2"
         sha1="1ee2f2bed0e5dd29d1cb155a166e6f8d50bbddb7">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/jackson-mapper-asl-1.9.13-b6773515943217cd30555480472f8b2f5aa39243.jar" />
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-mapper-asl-1.9.13_b6773515943217cd30555480472f8b2f5aa39243/classes.dex" />
     </item>
     <item
-        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.1.0/49f2061c938987c8e56679a731d74fd8448d8742/dagger-1.1.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="49f2061c938987c8e56679a731d74fd8448d8742">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/dagger-1.1.0-931ff64804073960ee1c0a473ff0b6ba3e767333.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/libs/retrofit-1.4.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="23de973a4908bc6f5ac6524af3251a19ad81a7b1">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/retrofit-1.4.1-d800436f113425dd7f3ca5d8fb1819588dc7eb5d.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-f2e37ee78cfd540a1f8574d56b2b643fdb32dd25.jar" />
-    </item>
-    <item
+        is-multidex="true"
         jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar"
-        jumboMode="false"
+        jumboMode="true"
+        optimize="false"
         revision="21.1.2"
         sha1="3c304d70f42f832e0a86d45bd437f692129299a4">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/jackson-core-asl-1.9.13-3a30448cb99c3fd6e79835b026bd6ffa605f8ab8.jar" />
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-asl-1.9.13_3a30448cb99c3fd6e79835b026bd6ffa605f8ab8/classes.dex" />
     </item>
     <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-9567aa99cbf5569261b06107c8e6ec5ffd90b841.jar" />
-    </item>
-    <item
-        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
         revision="21.1.2"
         sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
-        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/pre-dexed/debug/classes-cd0195351f4dc651b2e827855c277c483125de01.jar" />
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-22.2.0_c1222fea7d0ab8220a853d1fb15890e3fecdc040/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger-compiler/1.1.0/ddb38c2be31deeb7a001177f7c358665e350d646/dagger-compiler-1.1.0.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="ddb38c2be31deeb7a001177f7c358665e350d646">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/dagger-compiler-1.1.0_527c4cb075f22c5b6847045bf6175c9d7188137a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.8/cf615176cd1177edf71d3c9605f8dc148fede6be/otto-1.3.8.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="cf615176cd1177edf71d3c9605f8dc148fede6be">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/otto-1.3.8_9b3d787f4042b72d37561ebd1572d76cdd534e3f/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-22.2.0_0ea7ca0ee69544232b0a7aac3de3142627148520/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/5fc52c41ef0239d1093a1eb7c3697036183677ce/gson-2.3.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/gson-2.3_99a54b32029c2d265ff0530073f6e53ac75228b3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/exploded-aar/com.android.support/cardview-v7/22.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="11842de6a309c447b3a3d60d73ad637a87c58994">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-22.0.0_5c368d0ba1eb192a055dde93000665acfc4bbaa1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/com.squareup.dagger/dagger/1.1.0/49f2061c938987c8e56679a731d74fd8448d8742/dagger-1.1.0.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="49f2061c938987c8e56679a731d74fd8448d8742">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/dagger-1.1.0_931ff64804073960ee1c0a473ff0b6ba3e767333/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/javax.inject-1_b8b6bb8e1c4421d5786fddf5d309f2309df4355a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-22.2.0_f2e37ee78cfd540a1f8574d56b2b643fdb32dd25/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/trethoma1/Documents/SummonerSearch/summoners/libs/retrofit-1.4.1.jar"
+        jumboMode="true"
+        optimize="false"
+        revision="21.1.2"
+        sha1="23de973a4908bc6f5ac6524af3251a19ad81a7b1">
+        <dex dex="/Users/trethoma1/Documents/SummonerSearch/summoners/build/intermediates/transforms/dex/debug/folders/1000/2/retrofit-1.4.1_d800436f113425dd7f3ca5d8fb1819588dc7eb5d/classes.dex" />
     </item>
 
 </items>
